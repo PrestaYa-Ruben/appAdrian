@@ -2090,18 +2090,40 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
   border-radius:var(--radius-full);
 }
 
-.cuotas-pagos-card{ padding:6px 16px; }
+.cuotas-pagos-card{ padding:12px; }
 
+/* CAMBIO: antes cada fila era plana, todas pegadas con solo una línea
+   divisoria entre ellas. Ahora cada cuota/pago es su propia tarjeta
+   separada (con espacio entre una y otra), con tinte de color pastel
+   según su estado — misma paleta que ya usan las tarjetas del
+   dashboard (.tinte-verde/ambar/rojo/azul), para que a simple vista se
+   distinga pagada (verde) de pendiente (ámbar) de vencida (rojo). */
 .cuota-item, .pago-item{
   display:flex;
   align-items:center;
   gap:12px;
-  padding:14px 0;
-  border-bottom:1px solid var(--border);
+  padding:14px;
+  border-radius:var(--radius-md);
+  border:1.5px solid var(--border);
+  background:var(--surface);
+  margin-bottom:10px;
 }
-.cuota-item:last-child, .pago-item:last-child{ border-bottom:none; }
+.cuota-item:last-child, .pago-item:last-child{ margin-bottom:0; }
 .pago-item-clickable{ cursor:pointer; transition:opacity .12s ease; }
 .pago-item-clickable:active{ opacity:0.7; }
+
+/* Tinte de la tarjeta según el estado de la cuota */
+.cuota-item.pagada{ background:#F1FAF4; border-color:#BFE8CE; }
+.cuota-item.pendiente{ background:#FDF6EE; border-color:#F3D4AC; }
+.cuota-item.vencida{ background:#FDF3F3; border-color:#F5C6C6; }
+.cuota-item.abonada{ background:#F3F6FF; border-color:#C9D9FF; }
+
+/* Tinte de la tarjeta en la pestaña "Pagadas": verde para un pago
+   normal, rojo si es un recargo de mora, azul si es un abono a capital
+   (mismos colores que ya usan sus respectivos círculos numerados). */
+.pago-item{ background:#F1FAF4; border-color:#BFE8CE; }
+.pago-item.recargo{ background:#FDF3F3; border-color:#F5C6C6; }
+.pago-item.abono{ background:#F3F6FF; border-color:#C9D9FF; }
 
 .cuota-numero{
   width:38px;
@@ -3285,11 +3307,21 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
 .client-row{ cursor:pointer; transition:transform .12s ease; }
 .client-row:active{ transform:scale(0.98); }
 
-/* NUEVO: cliente con alguna cuota vencida — sombra roja muy sutil en la
-   parte inferior de la tarjeta, como señal de alerta discreta (no tan
-   fuerte como un badge o un color de fondo, solo un detalle visual). */
+/* CAMBIO: antes esto era solo una sombra roja muy sutil en el borde
+   inferior — ahora es un tinte completo de la tarjeta (mismo rojo
+   pastel que ya usan las tarjetas del dashboard, .tinte-rojo), como
+   señal de alerta clara para un cliente con alguna cuota vencida. */
 .client-row.client-row-mora{
-  border-bottom:1.5px solid rgba(229,72,72,0.55);
+  background:#FDF3F3;
+  border-color:#F5C6C6;
+}
+/* NUEVO: tinte verde para un cliente con préstamo activo y AL DÍA (sin
+   ninguna cuota vencida) — mismo verde pastel que ya usan las tarjetas
+   del dashboard (.tinte-verde), para distinguir a simple vista quién
+   está en mora (rojo) de quién no (verde). */
+.client-row.client-row-al-dia{
+  background:#F1FAF4;
+  border-color:#BFE8CE;
 }
 
 /* Insignia de préstamos activos, esquina superior derecha de la tarjeta */
@@ -11505,6 +11537,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         (p.plan || []).some(c => !estaCuotaPagada(p, c.numero) && cuotaVencida(p, c))
       );
       card.classList.toggle('client-row-mora', tieneCuotaVencida);
+      card.classList.toggle('client-row-al-dia', !tieneCuotaVencida); // NUEVO: tinte verde cuando está al día
 
       const saldoTotal = prestamosActivosCliente.reduce((s, p) => s + saldoPendientePrestamo(p), 0);
       if(saldoTotal > 0){
@@ -15631,7 +15664,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       const estadoClase = pagada ? 'pagada' : (vencida ? 'vencida' : (esAbonada ? 'abonada' : 'pendiente'));
 
       const item = document.createElement('div');
-      item.className = 'cuota-item';
+      item.className = 'cuota-item ' + estadoClase;
       const fechaDePago = pagada ? fechaPagoCuota(prestamo, cuota.numero) : null;
       item.innerHTML = `
         <div class="cuota-numero ${estadoClase}">${cuota.numero}</div>
@@ -15697,7 +15730,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       const esRecargoMora = pago.aplicarA === 'mora';
       const esAbono = pago.aplicarA === 'abono';
       const item = document.createElement('div');
-      item.className = 'pago-item pago-item-clickable';
+      item.className = 'pago-item pago-item-clickable' + (esRecargoMora ? ' recargo' : '') + (esAbono ? ' abono' : '');
       item.innerHTML = `
         <div class="cuota-numero${esRecargoMora ? ' recargo' : ''}${esAbono ? ' abono' : ''}">${esRecargoMora ? 'R' : (esAbono ? 'A' : pago.cuota)}</div>
         <div class="cuota-info">
