@@ -13,9 +13,9 @@
 // cambios (colores de marca, tarjetas de Inicio, Simulador, etc.) y las
 // fuentes Inter/Baloo 2 dejaron de cargarse desde Google Fonts para
 // quedar autoalojadas en ./fonts (ver ARCHIVOS_APP_SHELL más abajo).
-// CAMBIO: v2 -> v3 — index.html cambió (tinte de color por estado en
-// Clientes y en Detalle del Préstamo/Cuotas y Pagos).
-const CACHE_NAME = 'crediya-v3';
+// CAMBIO: v3 -> v4 — index.html cambió (tinte de color en la tarjeta de
+// préstamo dentro de Detalle de Cliente: verde=activo, rojo=vencido).
+const CACHE_NAME = 'crediya-v4';
 
 const ARCHIVOS_APP_SHELL = [
   './',

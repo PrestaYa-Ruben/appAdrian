@@ -1576,6 +1576,13 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
 .loan-card-finalizado{ opacity:0.72; }
 .loan-card-finalizado .loan-progress-fill{ background:var(--text-secondary); }
 
+/* NUEVO: tinte de color según el estado del préstamo — mismo verde/rojo
+   pastel que ya usan las tarjetas del dashboard, la lista de Clientes y
+   las cuotas del Detalle del Préstamo, para que se identifique a simple
+   vista un crédito activo (verde) de uno con cuotas vencidas (rojo). */
+.loan-card-activo{ background:#F1FAF4; border-color:#BFE8CE; }
+.loan-card-vencido{ background:#FDF3F3; border-color:#F5C6C6; }
+
 .loan-card-top{
   display:flex;
   align-items:center;
