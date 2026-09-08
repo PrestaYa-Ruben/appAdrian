@@ -3314,13 +3314,12 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
 .client-row{ cursor:pointer; transition:transform .12s ease; }
 .client-row:active{ transform:scale(0.98); }
 
-/* CAMBIO: antes esto era solo una sombra roja muy sutil en el borde
-   inferior — ahora es un tinte completo de la tarjeta (mismo rojo
-   pastel que ya usan las tarjetas del dashboard, .tinte-rojo), como
-   señal de alerta clara para un cliente con alguna cuota vencida. */
+/* CAMBIO: tinte más intenso y más rojo (menos rosado) que el resto de
+   tintes "vencido" de la app — SOLO en este módulo de Clientes, a
+   pedido — para que un cliente en mora resalte con más fuerza. */
 .client-row.client-row-mora{
-  background:#FDF3F3;
-  border-color:#F5C6C6;
+  background:#F7C4C4;
+  border-color:#D96565;
 }
 /* NUEVO: tinte verde para un cliente con préstamo activo y AL DÍA (sin
    ninguna cuota vencida) — mismo verde pastel que ya usan las tarjetas
