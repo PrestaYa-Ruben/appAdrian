@@ -2823,6 +2823,20 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
 .action-sheet-item.centrado{ justify-content:center; padding:12px 14px; }
 .action-sheet-cancelar span{ font-weight:600; color:var(--primary); }
 
+/* NUEVO: se retiró la opción "Compartir texto" del modal que aparece
+   al guardar un préstamo (a pedido) — oculta con CSS, no borrada del
+   HTML, porque su botón ya tiene un addEventListener sin protección
+   contra elemento nulo. Queda solo "Compartir imagen". */
+#accion-compartir-prestamo-texto{ display:none; }
+
+/* NUEVO: a pedido, este modal en particular (el que aparece al guardar
+   un préstamo) se abre centrado a mitad de pantalla en vez de pegado
+   abajo — es una excepción puntual con selector por #id, así que el
+   resto de los action-sheets de la app (menú de una cuota, copias de
+   seguridad, etc.) siguen apareciendo desde abajo como siempre. */
+#compartir-prestamo-overlay{ align-items:center; }
+#compartir-prestamo-overlay .action-sheet-wrap{ margin:0 16px; }
+
 /* Pequeña animación de entrada para el modal de Compartir Préstamo (mismo lenguaje de movimiento que .screen-anim) */
 @keyframes actionSheetEnter{
   from{ opacity:0; transform:translateY(28px); }
@@ -21450,9 +21464,45 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     });
 
     // ---- Formateo en vivo del valor a simular ----
+    // CAMBIO: antes, cada tecla reformateaba TODO el valor pasándolo por
+    // Number() (formatearMiles) y el cursor saltaba siempre al final
+    // (comportamiento estándar del navegador al reasignar `input.value`).
+    // Eso tenía dos problemas: 1) era imposible corregir un dígito en
+    // medio del número sin que el cursor se fuera al final, y 2) si se
+    // borraba el primer dígito de un número como "300.000" quedando
+    // "00.000", Number() lo colapsaba a "0" y se perdían los ceros.
+    // Ahora, mientras se escribe, se agrupan los miles con puntos SIN
+    // pasar por Number() (así no se pierden ceros a la izquierda a
+    // mitad de edición) y se recoloca el cursor en la posición
+    // equivalente — al salir del campo (blur) sí se normaliza con
+    // formatearMiles() para dejar un valor final limpio.
+    function agruparMilesSinPerderCeros(soloDigitos){
+      if(!soloDigitos) return '';
+      return soloDigitos.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function formatearMilesConCursor(input){
+      const posicionAnterior = input.selectionStart;
+      const valorAnterior = input.value;
+      let digitosAntesCursor = 0;
+      for(let i = 0; i < posicionAnterior; i++){
+        if(/\d/.test(valorAnterior[i])) digitosAntesCursor++;
+      }
+      input.value = agruparMilesSinPerderCeros(input.value.replace(/[^\d]/g, ''));
+      const valorNuevo = input.value;
+      let contados = 0;
+      let nuevaPosicion = valorNuevo.length;
+      for(let i = 0; i < valorNuevo.length; i++){
+        if(contados >= digitosAntesCursor){ nuevaPosicion = i; break; }
+        if(/\d/.test(valorNuevo[i])) contados++;
+      }
+      input.setSelectionRange(nuevaPosicion, nuevaPosicion);
+    }
     inputValor.addEventListener('input', ()=>{
-      inputValor.value = formatearMiles(inputValor.value);
+      formatearMilesConCursor(inputValor);
       renderizarSimulacion();
+    });
+    inputValor.addEventListener('blur', ()=>{
+      inputValor.value = formatearMiles(inputValor.value); // normaliza (quita ceros a la izquierda sobrantes) al salir del campo
     });
     inputPorcentaje.addEventListener('input', ()=>{
       inputPorcentaje.value = inputPorcentaje.value.replace(/[^\d.]/g, '');

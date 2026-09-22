@@ -13,9 +13,9 @@
 // cambios (colores de marca, tarjetas de Inicio, Simulador, etc.) y las
 // fuentes Inter/Baloo 2 dejaron de cargarse desde Google Fonts para
 // quedar autoalojadas en ./fonts (ver ARCHIVOS_APP_SHELL más abajo).
-// CAMBIO: v5 -> v6 — index.html cambió (tono más rojo, menos rosado,
-// en el tinte de mora del módulo Clientes).
-const CACHE_NAME = 'crediya-v6';
+// CAMBIO: v7 -> v8 — index.html cambió (el modal de compartir al
+// guardar un préstamo ahora se abre centrado, no pegado abajo).
+const CACHE_NAME = 'crediya-v8';
 
 const ARCHIVOS_APP_SHELL = [
   './',
