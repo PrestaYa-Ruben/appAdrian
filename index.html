@@ -1545,6 +1545,128 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
   width:100%;
   margin-top:4px;
 }
+/* ==========================================================
+   REDISEÑO "Nuevo Préstamo" (pedido explícito del usuario, con imagen
+   de referencia). Todo acotado a #screen-nuevo-prestamo / clases .np-*
+   — ningún otro formulario de la app cambia.
+   ========================================================== */
+#screen-nuevo-prestamo{ --np-teal:#2E7F95; --np-borde:#A9B4C0; --np-gris:#E9EEF2; }
+body.modo-oscuro #screen-nuevo-prestamo{ --np-gris:var(--background); }
+#screen-nuevo-prestamo .header h1{ color:var(--np-teal); font-size:26px; font-weight:800; letter-spacing:-0.3px; }
+.np-form{ gap:12px; padding:14px 14px 30px; }
+.np-card{
+  background:var(--surface);
+  border:1px solid rgba(20,30,60,0.08);
+  border-radius:14px;
+  box-shadow:0 2px 8px rgba(20,40,60,0.09);
+  padding:14px 13px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.np-titulo{ font-size:17.5px; font-weight:600; color:var(--text); margin:8px 0 -2px 6px; }
+
+.np-cliente{ flex-direction:row; align-items:center; gap:15px; padding:12px 15px; }
+.np-avatar{
+  width:54px; height:54px; min-width:54px; border-radius:50%;
+  background:#E3E7EB; color:#6B7480;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:500; text-transform:uppercase;
+}
+.np-cliente-info{ min-width:0; }
+.np-cliente-nombre{ font-size:22px; font-weight:700; color:var(--text); line-height:1.2; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.np-cliente-rol{ font-size:14.5px; color:#4B5563; margin-top:3px; }
+body.modo-oscuro .np-cliente-rol{ color:var(--text-secondary); }
+
+.np-fieldset{
+  position:relative;
+  min-width:0;
+  margin:0;
+  border:1.5px solid var(--np-borde);
+  border-radius:12px;
+  background:var(--np-gris);
+  padding:1px 14px 10px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.np-fieldset legend{ padding:0 7px; margin-left:-2px; font-size:13.5px; font-weight:500; color:var(--text); line-height:1; white-space:nowrap; }
+.np-fieldset:focus-within{ border-color:var(--np-teal); }
+.np-monto{ padding-top:5px; padding-bottom:15px; margin-top:2px; }
+.np-fieldset > input, .np-fieldset > button{ min-height:30px; }
+.np-peso{ font-size:28px; font-weight:800; color:var(--np-teal); line-height:1; }
+.np-icono-monto{ width:32px; height:22px; flex-shrink:0; }
+.np-icono-reloj{ width:19px; height:19px; stroke:#7B8794; flex-shrink:0; }
+.np-dos{ display:grid; grid-template-columns:1fr 1.02fr; gap:13px; }
+
+#screen-nuevo-prestamo .np-input,
+#screen-nuevo-prestamo .np-input-cond{
+  flex:1; min-width:0; width:100%;
+  border:none; background:transparent; box-shadow:none; border-radius:0;
+  padding:0; font-size:17px; font-weight:500; color:var(--text);
+}
+#screen-nuevo-prestamo .np-input::placeholder,
+#screen-nuevo-prestamo .np-input-cond::placeholder{ color:#7B8794; font-weight:400; }
+
+#screen-nuevo-prestamo .np-select.field-select-trigger{
+  flex:1; min-width:0; width:100%;
+  border:none; background:transparent; box-shadow:none; padding:0;
+  display:flex; align-items:center; justify-content:space-between; gap:6px;
+  font-size:19px; font-weight:600; color:var(--text); text-align:left;
+}
+#screen-nuevo-prestamo .np-select.field-select-trigger .chevron-select{ width:19px; height:19px; stroke:#4B5563; }
+
+.np-cond-row{ display:flex; align-items:center; gap:7px; }
+.np-cond-card{ flex:1; min-width:0; padding:9px; }
+.np-cond-box{
+  display:flex; flex-direction:column; gap:10px;
+  background:var(--np-gris);
+  border:1.5px solid transparent;
+  border-radius:12px;
+  padding:11px 12px 10px;
+  cursor:text;
+}
+.np-cond-box:has(input:disabled){ background:transparent; border:1.5px dashed var(--np-borde); }
+.np-cond-label{ display:flex; align-items:center; gap:7px; font-size:13.5px; font-weight:500; color:var(--text); white-space:nowrap; }
+.np-cond-label svg{ width:17px; height:17px; flex-shrink:0; }
+.np-cond-valor{ display:flex; align-items:center; gap:6px; min-height:26px; }
+#screen-nuevo-prestamo .np-input-cond{ font-size:16.5px; }
+#screen-nuevo-prestamo .np-input-cond:disabled{ background:transparent; color:var(--text-secondary); -webkit-text-fill-color:currentColor; opacity:1; }
+.np-pct{ font-size:20px; font-weight:600; color:var(--text); padding-right:2px; }
+#screen-nuevo-prestamo .np-swap{
+  width:36px; height:36px; min-width:36px; margin:0;
+  border-radius:50%; background:var(--surface);
+  border:1.5px solid var(--np-teal); color:var(--np-teal);
+}
+#screen-nuevo-prestamo .np-swap svg{ width:17px; height:17px; }
+
+.np-fecha-box{ display:flex; align-items:center; gap:18px; background:var(--np-gris); border-radius:12px; padding:15px 20px; }
+.np-icono-fecha{ width:44px; height:41px; flex-shrink:0; }
+.np-fecha-txt{ flex:1; min-width:0; }
+.np-fecha-label{ font-size:14px; font-weight:400; color:var(--text); margin-bottom:2px; }
+#screen-nuevo-prestamo .np-fecha-input.field-select-trigger{
+  width:100%; border:none; background:transparent; box-shadow:none; padding:0;
+  font-size:26px; font-weight:800; letter-spacing:-0.3px; color:var(--text); text-align:left; line-height:1.15;
+}
+#screen-nuevo-prestamo .np-fecha-input.field-select-trigger .chevron-select{ display:none; }
+#screen-nuevo-prestamo .np-nota-btn{
+  width:100%; justify-content:center; gap:9px; margin:-4px 0 0;
+  padding:11px 14px; border:1.5px solid var(--text); border-radius:10px;
+  color:var(--text); font-size:17px; font-weight:500; background:var(--surface);
+}
+#screen-nuevo-prestamo .np-nota-btn svg{ width:21px; height:21px; }
+#screen-nuevo-prestamo .np-nota-btn.active{ color:var(--np-teal); border-color:var(--np-teal); }
+
+.np-card-mora{ padding:14px 15px; }
+.np-card-mora .mora-toggle-row{ padding:0; }
+.np-card-mora .mora-toggle-title{ font-size:17px; margin-bottom:6px; }
+.np-card-mora .mora-toggle-subtitle{ font-size:14px; color:#4B5563; line-height:1.45; }
+body.modo-oscuro .np-card-mora .mora-toggle-subtitle{ color:var(--text-secondary); }
+
+#screen-nuevo-prestamo .np-ver-sim{ color:var(--text); font-size:15.5px; font-weight:500; gap:10px; padding:6px; }
+#screen-nuevo-prestamo .np-ver-sim span{ text-decoration:underline; text-underline-offset:3px; }
+#screen-nuevo-prestamo .np-ver-sim svg{ width:17px; height:17px; }
+
 .btn-guardar-prestamo svg{ width:19px; height:19px; stroke:currentColor; }
 
 .share-fab{
@@ -1567,7 +1689,9 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
 .share-fab:active{ transform:scale(0.92); }
 
 /* Tarjeta de préstamo guardado (lista dentro del Detalle de Cliente) */
-.loan-card-full{ padding:11px 14px; margin-bottom:7px; }
+/* CAMBIO: más padding interno — igual a la tarjeta de referencia (se ve
+   más espaciosa/respirada que antes). */
+.loan-card-full{ padding:16px; margin-bottom:7px; }
 .loan-card-clickable{ cursor:pointer; transition:transform .12s ease; }
 .loan-card-clickable:active{ transform:scale(0.98); }
 
@@ -1580,20 +1704,38 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
    pastel que ya usan las tarjetas del dashboard, la lista de Clientes y
    las cuotas del Detalle del Préstamo, para que se identifique a simple
    vista un crédito activo (verde) de uno con cuotas vencidas (rojo). */
-.loan-card-activo{ background:#F1FAF4; border-color:#BFE8CE; }
-.loan-card-vencido{ background:#FDF3F3; border-color:#F5C6C6; }
+/* CAMBIO: borde más remarcado en la tarjeta del crédito (2px y un tono
+   más fuerte del mismo verde/rojo) — pedido explícito del usuario. */
+.loan-card-full{ border-width:2px; }
+.loan-card-activo{ background:#F1FAF4; border-color:#7CCB98; }
+.loan-card-vencido{ background:#FDF3F3; border-color:#E58A8A; }
 
 .loan-card-top{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:2px;
+  margin-bottom:8px;
 }
 .loan-code{
   font-size:14px;
   font-weight:600;
   color:var(--text-secondary);
   letter-spacing:0.2px;
+}
+/* NUEVO: nombre del cliente como encabezado principal de la tarjeta
+   (rediseño para que coincida exactamente con la tarjeta de referencia) */
+.loan-card-nombre{
+  font-size:17px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-0.1px;
+  line-height:1.25;
+  flex:1;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  margin-right:10px;
 }
 .loan-badge{
   font-size:12.5px;
@@ -1608,6 +1750,26 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
 .loan-badge.activo{ background:var(--success); }
 .loan-badge.finalizado{ background:var(--text-secondary); }
 .loan-badge.vencido{ background:var(--danger); }
+/* NUEVO: versión del badge usada en la tarjeta de préstamo (rediseño) —
+   mayúsculas, con punto blanco, igual a la tarjeta de referencia. Solo
+   afecta esta tarjeta (.loan-card-full), no el badge grande de la
+   pantalla de Detalle del Préstamo, que queda igual que antes. */
+.loan-card-full .loan-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  text-transform:uppercase;
+  letter-spacing:0.4px;
+  padding:6px 13px;
+  flex-shrink:0;
+}
+.loan-badge-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#fff;
+  flex-shrink:0;
+}
 
 /* NUEVO: columna a la derecha de la tarjeta de préstamo — la etiqueta de
    estado (Activo/Vencido/Finalizado) arriba, y debajo el ícono para
@@ -1638,24 +1800,40 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
   letter-spacing:-0.5px;
   margin-bottom:4px;
 }
+/* NUEVO: monto más grande y más grueso dentro de la tarjeta de préstamo
+   (rediseño), igual a la tarjeta de referencia. No afecta el monto de
+   la pantalla de Detalle del Préstamo (.loan-detail-amount), que tiene
+   su propia regla y queda igual. */
+.loan-card-full .loan-amount{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:8px;
+}
 
 .loan-divider{
   border:none;
   border-top:1px solid var(--border);
   margin:2px 0;
 }
+/* CAMBIO: más espacio alrededor de los separadores dentro de la tarjeta
+   de préstamo (rediseño) — el resto de usos de .loan-divider en la app
+   (comprobantes, recibos, etc.) no se tocan. */
+.loan-card-full .loan-divider{ margin:6px 0; }
 
 .loan-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:2px 0;
+  padding:4px 0;
   font-size:14px;
 }
 .loan-row .loan-row-label{ color:var(--text-secondary); font-weight:400; }
 .loan-row .loan-row-value{ color:var(--text); font-weight:600; }
 .loan-row .loan-row-value .loan-freq{ font-weight:600; color:var(--text); }
-.loan-row .loan-row-value.loan-saldo{ color:var(--primary); }
+/* CAMBIO: "Saldo pendiente" ahora en rojo (antes azul) y "Total abonado"
+   en azul — igual a la tarjeta de referencia. */
+.loan-row .loan-row-value.loan-saldo{ color:var(--danger); }
+.loan-row .loan-row-value.loan-abonado{ color:var(--primary); }
 
 .loan-progress-header{
   display:flex;
@@ -1665,8 +1843,11 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
   color:var(--text-secondary);
   font-weight:400;
   padding-top:1px;
-  margin-bottom:2px;
+  margin-bottom:6px;
 }
+/* NUEVO: porcentaje de progreso en verde junto a "X / Y cuotas" — igual
+   a la tarjeta de referencia. */
+.loan-progress-pct{ color:var(--success); font-weight:700; }
 .loan-progress-track{
   width:100%;
   height:8px;
@@ -5126,16 +5307,24 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     <span class="header-spacer"></span>
   </header>
 
-  <form class="form-section" id="form-nuevo-prestamo">
+  <form class="form-section np-form" id="form-nuevo-prestamo">
 
-    <div class="loan-client-tag" id="loan-cliente-nombre">Cliente</div>
+    <!-- REDISEÑO COMPLETO (pedido explícito del usuario, con imagen de
+         referencia): misma lógica y los MISMOS ids de siempre — solo
+         cambió la maquetación/estilo. Todo el CSS nuevo está acotado a
+         #screen-nuevo-prestamo (clases .np-*), así que no afecta ningún
+         otro formulario de la app. -->
+    <div class="np-card np-cliente">
+      <div class="np-avatar" id="np-avatar-inicial">C</div>
+      <div class="np-cliente-info">
+        <div class="np-cliente-nombre" id="loan-cliente-nombre">Cliente</div>
+        <div class="np-cliente-rol">Prestatario</div>
+      </div>
+    </div>
 
-    <!-- NUEVO: oculto a pedido — hoy en día solo existe UNA opción real
-         ("Interés al capital inicial", ya seleccionada por defecto), así
-         que este paso no ofrecía ninguna decisión real. El <select> se
-         mantiene en el formulario (con su valor por defecto intacto) para
-         que el cálculo del préstamo y el guardado sigan funcionando
-         exactamente igual — solo se dejó de mostrar. -->
+    <!-- Oculto a pedido — solo existe UNA opción real ("Interés al capital
+         inicial"); el <select> se mantiene para que el cálculo y el
+         guardado sigan funcionando exactamente igual. -->
     <div class="form-field" style="display:none;">
       <label class="field-label" for="select-tipo-interes">Tipo de interés*</label>
       <select class="field-input field-select" id="select-tipo-interes" required>
@@ -5144,79 +5333,96 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       </select>
     </div>
 
-    <div class="form-field">
-      <label class="field-label" for="input-valor-prestamo">Valor</label>
-      <div class="field-with-icon">
-        <input class="field-input" id="input-valor-prestamo" type="text" inputmode="numeric" placeholder="Toca y escribe" required>
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>
+    <div class="np-titulo">Detalles del Préstamo</div>
+    <div class="np-card">
+      <fieldset class="np-fieldset np-monto">
+        <legend>Monto Solicitado</legend>
+        <span class="np-peso">$</span>
+        <input class="field-input np-input" id="input-valor-prestamo" type="text" inputmode="numeric" placeholder="Toca y escribe" required>
+        <svg class="np-icono-monto" viewBox="0 0 36 24" aria-hidden="true"><circle cx="12" cy="12" r="11.5" fill="#2E7F95"></circle><rect x="20" y="4.5" width="15" height="3.4" rx="1.2" fill="#2E7F95"></rect><rect x="22" y="10.3" width="13" height="3.4" rx="1.2" fill="#2E7F95"></rect><rect x="20" y="16.1" width="15" height="3.4" rx="1.2" fill="#2E7F95"></rect><text x="12" y="17.2" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#fff">$</text></svg>
+      </fieldset>
+
+      <div class="np-dos">
+        <fieldset class="np-fieldset">
+          <legend>Número de Cuotas</legend>
+          <input class="field-input np-input" id="input-cuotas-prestamo" type="text" inputmode="numeric" placeholder="Escribe" required>
+          <svg class="np-icono-reloj" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15.5 14"></polyline></svg>
+        </fieldset>
+        <fieldset class="np-fieldset np-frecuencia">
+          <legend>Frecuencia</legend>
+          <select class="field-select np-select" id="select-frecuencia" required>
+            <option value="diario">Diario</option>
+            <option value="semanal">Semanal</option>
+            <option value="quincenal" selected>Quincenal</option>
+            <option value="mensual">Mensual</option>
+          </select>
+        </fieldset>
       </div>
     </div>
 
-    <div class="form-field">
-      <label class="field-label" for="input-cuotas-prestamo">Cuotas</label>
-      <div class="field-with-icon">
-        <input class="field-input" id="input-cuotas-prestamo" type="text" inputmode="numeric" placeholder="Toca y escribe" required>
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+    <div class="np-titulo">Condiciones de Pago</div>
+    <div class="np-cond-row">
+      <div class="np-card np-cond-card">
+        <label class="np-cond-box" for="input-tasa-interes">
+          <span class="np-cond-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2E7F95" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="20" x2="5" y2="13"></line><line x1="10" y1="20" x2="10" y2="10"></line><line x1="15" y1="20" x2="15" y2="13"></line><line x1="20" y1="20" x2="20" y2="9"></line><polyline points="4 9 10 4 15 8 20 3"></polyline></svg>
+            Tasa de Interés
+          </span>
+          <span class="np-cond-valor">
+            <input class="field-input np-input-cond" id="input-tasa-interes" type="text" inputmode="decimal" placeholder="0.00">
+            <span class="np-pct">%</span>
+          </span>
+        </label>
       </div>
-    </div>
-
-    <div class="interes-swap-row">
-      <div class="form-field">
-        <label class="field-label" for="input-tasa-interes">Interés</label>
-        <div class="field-with-icon">
-          <input class="field-input" id="input-tasa-interes" type="text" inputmode="decimal" placeholder="0.00">
-          <span class="field-suffix">%</span>
-        </div>
-      </div>
-      <button type="button" class="swap-btn" id="btn-swap-interes" aria-label="Cambiar entre % y cuota deseada">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+      <button type="button" class="swap-btn np-swap" id="btn-swap-interes" aria-label="Cambiar entre % y cuota deseada">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 20 7 16 11"></polyline><path d="M4 11V9.5A2.5 2.5 0 0 1 6.5 7H20"></path><polyline points="8 21 4 17 8 13"></polyline><path d="M20 13v1.5A2.5 2.5 0 0 1 17.5 17H4"></path></svg>
       </button>
-      <div class="form-field">
-        <label class="field-label" for="input-cuota-deseada">Cuota deseada</label>
-        <input class="field-input" id="input-cuota-deseada" type="text" inputmode="numeric" placeholder="Toca y escribe">
+      <div class="np-card np-cond-card">
+        <label class="np-cond-box" for="input-cuota-deseada">
+          <span class="np-cond-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E8793A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"></rect><line x1="2.5" y1="10" x2="21.5" y2="10"></line><line x1="6" y1="15" x2="10" y2="15"></line></svg>
+            Cuota Deseada
+          </span>
+          <span class="np-cond-valor">
+            <input class="field-input np-input-cond" id="input-cuota-deseada" type="text" inputmode="numeric" placeholder="Escribe">
+          </span>
+        </label>
       </div>
     </div>
 
-    <div class="form-field">
-      <label class="field-label" for="select-frecuencia">Frecuencia de pago*</label>
-      <select class="field-input field-select" id="select-frecuencia" required>
-        <option value="diario">Diario</option>
-        <option value="semanal">Semanal</option>
-        <option value="quincenal" selected>Quincenal</option>
-        <option value="mensual">Mensual</option>
-      </select>
-    </div>
-
-    <div class="fecha-nota-row">
-      <div class="form-field" style="flex:1;">
-        <label class="field-label" for="input-fecha-credito">Fecha del Crédito</label>
-        <div class="field-with-icon">
-          <input class="field-input" id="input-fecha-credito" type="date" required>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    <div class="np-titulo">Calendario y Notas</div>
+    <div class="np-card">
+      <div class="np-fecha-box">
+        <svg class="np-icono-fecha" viewBox="0 0 32 30" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="23" height="22" rx="3.5" stroke="#2E7F95" stroke-width="2.2"></rect><line x1="2" y1="11.5" x2="25" y2="11.5" stroke="#2E7F95" stroke-width="2.2"></line><line x1="8.5" y1="2" x2="8.5" y2="7" stroke="#2E7F95" stroke-width="2.2"></line><line x1="18.5" y1="2" x2="18.5" y2="7" stroke="#2E7F95" stroke-width="2.2"></line><rect x="6.5" y="15" width="3.6" height="3.4" rx="0.8" fill="#2E7F95"></rect><rect x="12" y="15" width="3.6" height="3.4" rx="0.8" fill="#2E7F95"></rect><rect x="6.5" y="20.5" width="3.6" height="3.4" rx="0.8" fill="#2E7F95"></rect><path d="M19 27.5l1-4.5 8-8 3.5 3.5-8 8z" fill="#E8793A" stroke="#fff" stroke-width="1.2"></path></svg>
+        <div class="np-fecha-txt">
+          <div class="np-fecha-label">Fecha de Desembolso</div>
+          <input class="field-input np-fecha-input" id="input-fecha-credito" type="date" required>
         </div>
       </div>
-      <button type="button" class="add-note-btn" id="btn-agregar-nota-prestamo">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>
+      <button type="button" class="add-note-btn np-nota-btn" id="btn-agregar-nota-prestamo">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8"></path><line x1="8" y1="8" x2="13" y2="8"></line><line x1="8" y1="12" x2="11" y2="12"></line><path d="M13.5 20.5l.8-3.300 6-6a1.700 1.700 0 0 1 2.400 2.400l-6 6z"></path></svg>
         <span id="texto-btn-nota">Agregar Nota</span>
       </button>
-    </div>
-
-    <div class="form-field" id="campo-nota-prestamo" style="display:none;">
-      <label class="field-label" for="input-nota-prestamo">Nota</label>
-      <textarea class="field-input field-textarea" id="input-nota-prestamo" rows="2"></textarea>
-    </div>
-
-    <div class="mora-toggle-row">
-      <div class="mora-toggle-text">
-        <div class="mora-toggle-title">Habilitar Interés por Mora</div>
-        <div class="mora-toggle-subtitle">Cobrar intereses sobre montos vencidos después del período de gracia</div>
+      <div class="form-field np-campo-nota" id="campo-nota-prestamo" style="display:none;">
+        <label class="field-label" for="input-nota-prestamo">Nota</label>
+        <textarea class="field-input field-textarea" id="input-nota-prestamo" rows="2"></textarea>
       </div>
-      <button type="button" class="toggle-switch" id="toggle-mora" role="switch" aria-checked="false" aria-label="Habilitar interés por mora"></button>
     </div>
 
-    <button type="button" class="ver-simulacion-btn" id="btn-ver-simulacion">
+    <div class="np-titulo">Opciones Adicionales</div>
+    <div class="np-card np-card-mora">
+      <div class="mora-toggle-row">
+        <div class="mora-toggle-text">
+          <div class="mora-toggle-title">Habilitar Interés por Mora</div>
+          <div class="mora-toggle-subtitle">Cobrar intereses sobre montos vencidos después del período de gracia</div>
+        </div>
+        <button type="button" class="toggle-switch" id="toggle-mora" role="switch" aria-checked="false" aria-label="Habilitar interés por mora"></button>
+      </div>
+    </div>
+
+    <button type="button" class="ver-simulacion-btn np-ver-sim" id="btn-ver-simulacion">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      Ver simulación
+      <span>Ver Simulación Detallada (Plan de Pagos)</span>
     </button>
 
     <!-- SIMULACIÓN / PLAN DE PAGOS (oculto hasta calcular) -->
@@ -12798,6 +13004,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     document.getElementById('titulo-form-prestamo').textContent = 'Nuevo Préstamo';
     document.getElementById('texto-btn-guardar-prestamo').textContent = 'Guardar Préstamo';
     loanClienteNombre.textContent = clienteEnDetalle.nombre;
+    document.getElementById('np-avatar-inicial').textContent = (loanClienteNombre.textContent.trim().charAt(0) || '?').toUpperCase(); // NUEVO: inicial del avatar (rediseño)
 
     screenDetalleCliente.style.display = 'none';
     screenNuevoPrestamo.style.display = 'block';
@@ -12817,6 +13024,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     document.getElementById('titulo-form-prestamo').textContent = 'Editar Préstamo';
     document.getElementById('texto-btn-guardar-prestamo').textContent = 'Guardar Cambios';
     loanClienteNombre.textContent = clienteEnDetalle ? clienteEnDetalle.nombre : '';
+    document.getElementById('np-avatar-inicial').textContent = (loanClienteNombre.textContent.trim().charAt(0) || '?').toUpperCase(); // NUEVO: inicial del avatar (rediseño)
 
     selectTipoInteres.value = prestamo.tipoInteres;
     inputValorPrestamo.value = formatearMiles(prestamo.valor);
@@ -15251,9 +15459,13 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
   // Construye el DOM de la tarjeta compacta de préstamo (lista dentro del Detalle de Cliente
   // y ahora también dentro de la pantalla global de Préstamos).
-  // mostrarCliente (nuevo, opcional, default false): agrega el nombre del cliente bajo el
-  // código — se usa solo en la pantalla global; en Detalle de Cliente no cambia nada porque
-  // ese llamado sigue pasando un solo argumento.
+  // REDISEÑO: ahora encabeza siempre con el nombre del cliente (igual a
+  // la tarjeta de referencia), incluye la fila "Total a pagar" y el
+  // porcentaje de progreso, y ya no muestra el código del crédito ni el
+  // ícono de recordatorio en esta tarjeta (ese acceso directo sigue
+  // disponible desde otras pantallas). El parámetro mostrarCliente ya
+  // no cambia el contenido (se deja en la firma para no romper los
+  // llamados existentes).
   function crearTarjetaPrestamo(prestamo, mostrarCliente){
     // Cuotas realmente completas (no cuenta registros de pago sueltos: un
     // recargo por mora o un abono parcial no deben inflar el progreso)
@@ -15264,22 +15476,15 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     const fechaInicioTexto = formatearFechaCorta(new Date(prestamo.fecha + 'T00:00:00'));
     const nombreFrecuencia = nombresFrecuencia[prestamo.frecuencia] || prestamo.frecuencia;
     const estadoVisual = estadoVisualPrestamo(prestamo);
-    const clienteTarjeta = mostrarCliente ? clientesGuardados.find(c => c.id === prestamo.clienteId) : null;
+    const clienteTarjeta = clientesGuardados.find(c => c.id === prestamo.clienteId);
+    const nombreEncabezado = clienteTarjeta ? clienteTarjeta.nombre : (prestamo.codigo || '');
 
     const card = document.createElement('div');
     card.className = 'card loan-card-full loan-card-' + estadoVisual;
     card.innerHTML = `
       <div class="loan-card-top">
-        <div>
-          <div class="loan-code">${prestamo.codigo || ''}</div>
-          ${clienteTarjeta ? `<div class="loan-detail-client">${clienteTarjeta.nombre}</div>` : ''}
-        </div>
-        <div class="loan-card-top-derecha">
-          <div class="loan-badge ${estadoVisual}">${etiquetaEstadoVisual(estadoVisual)}</div>
-          <button type="button" class="loan-card-recordatorio-btn" id="loan-card-recordatorio-${prestamo.id}" aria-label="Programar recordatorio">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><polyline points="12 9 12 13 14.5 14.5"></polyline><path d="M5 3 2 6"></path><path d="M22 6l-3-3"></path></svg>
-          </button>
-        </div>
+        <div class="loan-card-nombre">${nombreEncabezado}</div>
+        <div class="loan-badge ${estadoVisual}"><span class="loan-badge-dot"></span>${etiquetaEstadoVisual(estadoVisual)}</div>
       </div>
       <div class="loan-amount">${formatearPesos(prestamo.valor)}</div>
       <hr class="loan-divider">
@@ -15297,8 +15502,12 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         <span class="loan-row-value">${formatearPesos(cuotaRealPrestamo(prestamo))} <span class="loan-freq">/ ${nombreFrecuencia}</span></span>
       </div>
       <div class="loan-row">
+        <span class="loan-row-label">Total a pagar:</span>
+        <span class="loan-row-value">${formatearPesos(prestamo.totalAPagar || 0)}</span>
+      </div>
+      <div class="loan-row">
         <span class="loan-row-label">Total abonado:</span>
-        <span class="loan-row-value">${formatearPesos(totalAbonado)}</span>
+        <span class="loan-row-value loan-abonado">${formatearPesos(totalAbonado)}</span>
       </div>
       <div class="loan-row">
         <span class="loan-row-label">Saldo pendiente:</span>
@@ -15307,7 +15516,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       <hr class="loan-divider">
       <div class="loan-progress-header">
         <span>Progreso</span>
-        <span>${cuotasPagadas} / ${prestamo.cuotas} cuotas</span>
+        <span>${cuotasPagadas} / ${prestamo.cuotas} cuotas <span class="loan-progress-pct">· ${Math.round(porcentajeProgreso)}%</span></span>
       </div>
       <div class="loan-progress-track">
         <div class="loan-progress-fill" style="width:${porcentajeProgreso}%"></div>
@@ -15326,6 +15535,10 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     // Recordatorio" para el cliente de este préstamo, sin abrir el
     // detalle del crédito. stopPropagation() para que el clic no dispare
     // también el clic de la tarjeta completa (que abre el detalle).
+    // (La tarjeta rediseñada ya no muestra este ícono — el acceso directo
+    // a "Programar Recordatorio" sigue disponible desde Detalle de
+    // Cliente y desde cada cuota. Este bloque queda inofensivo porque
+    // el selector ya no encuentra el botón.)
     const btnRecordatorioTarjeta = card.querySelector('.loan-card-recordatorio-btn');
     if(btnRecordatorioTarjeta){
       btnRecordatorioTarjeta.addEventListener('click', (e)=>{
@@ -17035,7 +17248,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     if(etiqueta === 'Fecha de pago' || etiqueta === 'Fecha próximo pago' || etiqueta === 'Fecha del crédito') return 'calendario';
     if(etiqueta === 'Cuota' || etiqueta === 'Referente a' || etiqueta === 'Recargo por la' || etiqueta === 'Concepto' || etiqueta === 'N.° de cuotas') return 'documento';
     if(etiqueta === 'Valor de la cuota' || etiqueta === 'Valor del préstamo' || etiqueta === 'Saldo pendiente') return 'valor';
-    if(etiqueta === 'Abono realizado' || etiqueta === 'Valor abonado') return 'billetera';
+    if(etiqueta === 'Abono realizado' || etiqueta === 'Valor abonado' || etiqueta === 'Recargo pagado') return 'billetera';
     if(etiqueta === 'Método de pago') return 'tarjeta';
     if(etiqueta === 'Modalidad de pago') return 'modalidad';
     if(etiqueta === 'Estado') return 'estado';
@@ -17081,6 +17294,13 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     // Si el pago cubrió varias cuotas, "Pagada" solo aplica si TODAS
     // quedaron completamente saldadas (no solo tocadas parcialmente).
     const todasLasCuotasCubiertasQuedaronPagadas = numerosCuota.every(n => estaCuotaPagada(prestamo, n));
+    // NUEVO (pedido explícito del usuario): contador de cuotas PAGADAS EN SU
+    // TOTALIDAD (ej. "1 de 4"). Un recargo por mora o un abono parcial no
+    // suman: el número solo sube cuando una cuota queda completamente
+    // saldada. Se usa en el comprobante de recargo y en el de un abono que
+    // todavía no completa la cuota.
+    const cuotasPagadasCompletas = (prestamo.plan || []).filter(c => estaCuotaPagada(prestamo, c.numero)).length;
+    const textoCuotasPagadas = cuotasPagadasCompletas + ' de ' + prestamo.cuotas;
 
     // Filas de datos
     // REDISEÑADO (pedido explícito del usuario, con imagen de referencia):
@@ -17093,13 +17313,24 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     // interruptor de "Saldo pendiente" está activo (Ajustes → Plantilla
     // de recibo), se agrega después emparejándose con Modalidad de pago
     // (ver más abajo, junto a "Fecha próximo pago").
+    // CAMBIO (pedido explícito del usuario): la fila de monto de un recargo
+    // ya no se llama "Valor abonado" — ahora dice "Recargo pagado" (igual
+    // que el bloque destacado de arriba), y se agrega una fila "Estado:
+    // Recargo registrado" al final, en vez de usar "Abono realizado"/
+    // "Abono registrado" (esas dos etiquetas son solo para el pago real de
+    // una cuota — rama de abajo — nunca para un recargo). "Recargo por la:
+    // Cuota N.° X de Y" sigue siendo solo una REFERENCIA a qué cuota generó
+    // el recargo, nunca implica que esa cuota quedó pagada ni suma a su
+    // conteo de cuotas pagadas (eso ya lo filtra pagosDeCuota()/
+    // estaCuotaPagada() — el número de cuota de un recargo nunca avanza).
     let filas = esRecargoMora ? [
       ['Cliente', nombreCliente],
       ['Concepto', 'Recargo por mora'],
-      ['Recargo por la', 'Cuota N.° ' + cuota.numero + ' de ' + prestamo.cuotas],
-      ['Valor abonado', formatearPesos(montoAbonado)],
+      ['Cuota', textoCuotasPagadas],
+      ['Recargo pagado', formatearPesos(montoAbonado)],
       ['Método de pago', metodo],
-      ['Fecha de pago', fechaTexto]
+      ['Fecha de pago', fechaTexto],
+      ['Estado', 'Recargo registrado']
     ] : esAbono ? [
       ['Cliente', nombreCliente],
       ['Concepto', 'Abono a cuota ' + textoCuota],
@@ -17109,7 +17340,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     ] : [
       ['Cliente', nombreCliente],
       ['Fecha de pago', fechaTexto],
-      ['Cuota', textoCuota],
+      ['Cuota', todasLasCuotasCubiertasQuedaronPagadas ? textoCuota : textoCuotasPagadas],
       ['Valor de la cuota', formatearPesos(cuotaRealPrestamo(prestamo))],
       ['Abono realizado', formatearPesos(montoAbonado)],
       ['Estado', todasLasCuotasCubiertasQuedaronPagadas ? 'Pagada' : 'Abono registrado'],
@@ -17295,7 +17526,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     // realizado"/"Valor abonado" (pago confirmado) van en el mismo verde;
     // el resto se mantiene en el tono oscuro estándar.
     function colorValorCelda(etiqueta){
-      if(etiqueta === 'Estado' || etiqueta === 'Abono realizado' || etiqueta === 'Valor abonado') return colorVerde;
+      if(etiqueta === 'Estado' || etiqueta === 'Abono realizado' || etiqueta === 'Valor abonado' || etiqueta === 'Recargo pagado') return colorVerde;
       return colorTextoOscuro;
     }
 

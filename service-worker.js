@@ -15,7 +15,22 @@
 // quedar autoalojadas en ./fonts (ver ARCHIVOS_APP_SHELL más abajo).
 // CAMBIO: v7 -> v8 — index.html cambió (el modal de compartir al
 // guardar un préstamo ahora se abre centrado, no pegado abajo).
-const CACHE_NAME = 'crediya-v8';
+// CAMBIO: v8 -> v9 — index.html cambió (se rediseñó la tarjeta de
+// préstamo: encabezado con nombre del cliente, insignia en mayúsculas
+// con punto, monto más grande, fila "Total a pagar", colores de
+// "Total abonado"/"Saldo pendiente" y porcentaje de progreso).
+// CAMBIO: v9 -> v10 — index.html cambió (en el comprobante de un
+// recargo por mora, la fila de monto ya no dice "Valor abonado": ahora
+// dice "Recargo pagado", y se agregó la fila "Estado: Recargo
+// registrado" — antes esa fila no existía para un recargo).
+// CAMBIO: v10 -> v11 — index.html cambió (el comprobante de recargo y
+// el de un abono parcial ahora muestran "Cuota: X de Y" con el conteo de
+// cuotas pagadas en su totalidad, no el número de la cuota en curso).
+// CAMBIO: v11 -> v12 — index.html cambió (borde más remarcado en la
+// tarjeta del crédito).
+// CAMBIO: v12 -> v13 — index.html cambió (rediseño completo de la
+// pantalla "Nuevo Préstamo").
+const CACHE_NAME = 'crediya-v13';
 
 const ARCHIVOS_APP_SHELL = [
   './',
