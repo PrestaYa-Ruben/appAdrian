@@ -1796,6 +1796,9 @@ body.modo-oscuro .loan-card-full .loan-note{ background:rgba(0,0,0,0.25); border
   font-size:10.5px; font-weight:700; color:#4B5563; line-height:1; pointer-events:none;
 }
 .loan-progress-segmento.pagada .loan-progress-segmento-num{ color:#fff; }
+/* NUEVO (pedido del usuario): cuota vencida sin pagar = barrita roja */
+.loan-progress-segmento.vencida{ background:#E04848; box-shadow:inset 0 1.5px 3px rgba(120,0,0,0.35); }
+.loan-progress-segmento.vencida .loan-progress-segmento-num{ color:#fff; }
 .numeros-chicos .loan-progress-segmento-num{ font-size:8px; }
 .sin-numeros .loan-progress-segmento-num{ display:none; }
 body.modo-oscuro .loan-progress-segmento{ background:rgba(255,255,255,0.10); box-shadow:inset 0 1.5px 3px rgba(0,0,0,0.5); }
@@ -15971,7 +15974,8 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
           // Lo abonado se sigue viendo en el globito al tocar la barrita.
           const pagada = estaCuotaPagada(prestamo, c.numero);
           const fraccion = pagada ? 100 : 0;
-          return `<div class="loan-progress-segmento${pagada ? ' pagada' : ''}" data-numero="${c.numero}" role="button" aria-label="Cuota ${c.numero}"><div class="loan-progress-segmento-fill" style="width:${fraccion}%"></div><span class="loan-progress-segmento-num">${c.numero}</span></div>`;
+          const vencidaSeg = !pagada && cuotaVencida(prestamo, c); // NUEVO: barrita roja si la cuota está vencida
+          return `<div class="loan-progress-segmento${pagada ? ' pagada' : ''}${vencidaSeg ? ' vencida' : ''}" data-numero="${c.numero}" role="button" aria-label="Cuota ${c.numero}"><div class="loan-progress-segmento-fill" style="width:${fraccion}%"></div><span class="loan-progress-segmento-num">${c.numero}</span></div>`;
         }).join('')}
       </div>
       ${prestamo.nota ? `

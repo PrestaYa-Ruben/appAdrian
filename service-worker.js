@@ -61,7 +61,8 @@
 // CAMBIO: v27 -> v28 — index.html corregido (barra por cuotas solo se llena
 // con cuotas pagadas completas; "Quitar Nota" sí borra la nota; la nota
 // también se ve en el Detalle del Préstamo).
-const CACHE_NAME = 'crediya-v28';
+// CAMBIO: v28 -> v29 — index.html cambió (barritas de cuotas vencidas en rojo).
+const CACHE_NAME = 'crediya-v29';
 
 const ARCHIVOS_APP_SHELL = [
   './',
