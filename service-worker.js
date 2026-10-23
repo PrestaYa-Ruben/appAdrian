@@ -62,7 +62,11 @@
 // con cuotas pagadas completas; "Quitar Nota" sí borra la nota; la nota
 // también se ve en el Detalle del Préstamo).
 // CAMBIO: v28 -> v29 — index.html cambió (barritas de cuotas vencidas en rojo).
-const CACHE_NAME = 'crediya-v29';
+// CAMBIO: v29 -> v30 — index.html cambió ("Próxima cuota" en la tarjeta del
+// cliente abre Editar Fecha; la tarjeta toma la cuota sin pagar más antigua por fecha).
+// CAMBIO: v30 -> v31 — index.html cambió (inicial del avatar en negro; Cuota
+// y Saldo un poco menos intensos en la tarjeta del cliente).
+const CACHE_NAME = 'crediya-v31';
 
 const ARCHIVOS_APP_SHELL = [
   './',
