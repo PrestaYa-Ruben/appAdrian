@@ -58,7 +58,10 @@
 // tarjetas del cliente y del crédito).
 // CAMBIO: v26 -> v27 — index.html cambió (en la tarjeta del crédito la
 // cinta de alerta va justo debajo del monto otorgado).
-const CACHE_NAME = 'crediya-v27';
+// CAMBIO: v27 -> v28 — index.html corregido (barra por cuotas solo se llena
+// con cuotas pagadas completas; "Quitar Nota" sí borra la nota; la nota
+// también se ve en el Detalle del Préstamo).
+const CACHE_NAME = 'crediya-v28';
 
 const ARCHIVOS_APP_SHELL = [
   './',

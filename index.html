@@ -3818,7 +3818,14 @@ body.modo-oscuro .client-row-chip.frecuencia, body.modo-oscuro .client-row-chip.
 .client-row .cinta-alerta-mora{ flex:0 0 calc(100% + 32px); margin:0 -16px; }
 /* En la tarjeta del crédito */
 .loan-card-full .cinta-alerta-mora{ margin:2px -16px 10px; border-radius:0; border-bottom:1.5px solid #EAD27A; }
-.loan-card-full .cinta-alerta-mora + .loan-divider{ display:none; } /* la cinta ya separa el monto de los datos */
+.loan-card-full .cinta-alerta-mora + .loan-divider{ display:none; }
+/* Nota dentro del Detalle del Préstamo — mismo estilo "incrustado" */
+.loan-note.loan-note-detalle{
+  margin-top:14px; background:rgba(20,30,60,0.05);
+  border:1px solid rgba(20,30,60,0.12); border-left:3px solid var(--primary);
+  box-shadow:inset 0 2px 5px rgba(20,30,60,0.12);
+  color:var(--text); font-size:13.5px; font-weight:500;
+} /* la cinta ya separa el monto de los datos */
 body.modo-oscuro .cinta-alerta-mora{ background:rgba(234,210,122,0.18); border-top-color:rgba(234,210,122,0.4); }
 body.modo-oscuro .cinta-alerta-texto, body.modo-oscuro .cinta-alerta-texto b{ color:var(--text); }
 
@@ -14313,7 +14320,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         tasa: datos.tasa,
         frecuencia: datos.frecuencia,
         fecha: datos.fecha,
-        nota: inputNotaPrestamo.value.trim(),
+        nota: notaVisible ? inputNotaPrestamo.value.trim() : '', // CORREGIDO: "Quitar Nota" ahora sí borra la nota
         moraHabilitada,
         estado: 'activo',
         plan,
@@ -14345,7 +14352,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         tasa: datos.tasa,
         frecuencia: datos.frecuencia,
         fecha: datos.fecha,
-        nota: inputNotaPrestamo.value.trim(),
+        nota: notaVisible ? inputNotaPrestamo.value.trim() : '', // CORREGIDO: "Quitar Nota" ahora sí borra la nota
         moraHabilitada,
         estado: 'activo',
         plan,
@@ -15958,8 +15965,12 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
            llena en la proporción abonada (datos reales). -->
       <div class="loan-progress-segmentos${(prestamo.plan || []).length > 40 ? ' sin-numeros' : ((prestamo.plan || []).length > 20 ? ' numeros-chicos' : '')}" style="gap:${(prestamo.plan || []).length > 30 ? 1 : ((prestamo.plan || []).length > 12 ? 2 : 4)}px">
         ${(prestamo.plan || []).map(c => {
+          // CORREGIDO (reporte del usuario): una cuota con abono PARCIAL ya no
+          // se pinta llena a medias — la barrita solo se llena cuando la
+          // cuota está pagada en su totalidad (coincide con "X / Y cuotas").
+          // Lo abonado se sigue viendo en el globito al tocar la barrita.
           const pagada = estaCuotaPagada(prestamo, c.numero);
-          const fraccion = pagada ? 100 : Math.min(100, Math.round((sumaAbonadaCuota(prestamo, c.numero) / (c.total || 1)) * 100));
+          const fraccion = pagada ? 100 : 0;
           return `<div class="loan-progress-segmento${pagada ? ' pagada' : ''}" data-numero="${c.numero}" role="button" aria-label="Cuota ${c.numero}"><div class="loan-progress-segmento-fill" style="width:${fraccion}%"></div><span class="loan-progress-segmento-num">${c.numero}</span></div>`;
         }).join('')}
       </div>
@@ -16000,7 +16011,10 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         const fechaCorta = (iso)=>{ const d = new Date(iso); return d.getDate() + '-' + MESES_GLOBO[d.getMonth()]; };
         const pagada = estaCuotaPagada(prestamo, numero);
         const fechaPago = pagada ? fechaPagoCuota(prestamo, numero) : null;
-        const linea2 = pagada && fechaPago ? 'Pagó: ' + fechaCorta(fechaPago) : 'Pagar el ' + fechaCorta(cuotaSeg.fechaISO);
+        const abonadoSeg = pagada ? 0 : sumaAbonadaCuota(prestamo, numero);
+        const linea2 = pagada && fechaPago
+          ? 'Pagó: ' + fechaCorta(fechaPago)
+          : (abonadoSeg > 0 ? 'Abonó ' + formatearPesos(abonadoSeg) + ' · ' : '') + 'Pagar el ' + fechaCorta(cuotaSeg.fechaISO);
         mostrarGloboCuota(seg, 'Cuota ' + numero, formatearPesos(cuotaSeg.total), linea2, pagada);
       });
     });
@@ -16343,8 +16357,21 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
           <span>${cuotasVencidas} ${cuotasVencidas === 1 ? 'cuota vencida' : 'cuotas vencidas'}</span>
         </div>` : ''}
         </div>
+        ${prestamo.nota ? `
+        <div class="loan-note loan-note-detalle">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+          <span></span>
+        </div>` : ''}
       </div>
     `;
+    // NUEVO (reporte del usuario: "a veces no aparece el área de notas"):
+    // antes la nota solo se veía en la tarjeta de la lista, nunca dentro
+    // del Detalle del Préstamo. Ahora se muestra siempre visible aquí
+    // también (fuera de la parte que se expande/colapsa).
+    if(prestamo.nota){
+      const notaDetalleEl = loanDetailCardContainer.querySelector('.loan-note-detalle span');
+      if(notaDetalleEl) notaDetalleEl.textContent = prestamo.nota;
+    }
 
     // NUEVO: badge de estado (Activo/Vencido/Finalizado) — abre el
     // "Ticket de Crédito". stopPropagation() por si en el futuro se
