@@ -3801,6 +3801,27 @@ body.modo-oscuro .client-row-chip.frecuencia, body.modo-oscuro .client-row-chip.
 .client-row-recordatorio-btn{ display:none !important; }
 .client-row .client-row-chips{ padding-right:0; }
 
+/* NUEVO: cinta amarilla de alerta de mora (tarjeta del cliente y del
+   crédito) — pegada al borde inferior, de lado a lado. */
+.cinta-alerta-mora{
+  display:flex; align-items:center; gap:7px; flex-wrap:nowrap; white-space:nowrap;
+  background:#F8EBB0; border-top:1.5px solid #EAD27A;
+  padding:9px 12px 10px; line-height:1.3; overflow:hidden;
+  border-bottom-right-radius:6px;
+}
+.cinta-alerta-mora svg{ width:18px; height:18px; flex-shrink:0; }
+.cinta-alerta-titulo{ font-size:13.5px; font-weight:800; color:#C0392B; letter-spacing:0.2px; flex-shrink:0; }
+.cinta-alerta-texto{ font-size:13.5px; font-weight:400; color:#2B2B2B; overflow:hidden; text-overflow:ellipsis; }
+.cinta-alerta-texto b{ font-weight:800; color:#1A1A1A; }
+/* En la tarjeta del cliente (fila flex): la cinta baja a su propia línea */
+.client-row:has(.cinta-alerta-mora){ flex-wrap:wrap; padding-bottom:0; row-gap:14px; }
+.client-row .cinta-alerta-mora{ flex:0 0 calc(100% + 32px); margin:0 -16px; }
+/* En la tarjeta del crédito */
+.loan-card-full .cinta-alerta-mora{ margin:2px -16px 10px; border-radius:0; border-bottom:1.5px solid #EAD27A; }
+.loan-card-full .cinta-alerta-mora + .loan-divider{ display:none; } /* la cinta ya separa el monto de los datos */
+body.modo-oscuro .cinta-alerta-mora{ background:rgba(234,210,122,0.18); border-top-color:rgba(234,210,122,0.4); }
+body.modo-oscuro .cinta-alerta-texto, body.modo-oscuro .cinta-alerta-texto b{ color:var(--text); }
+
 /* Buscador de Clientes más remarcado y botón "+" redondo */
 #screen-clientes .search-box{ border:2px solid #AEB8C5; box-shadow:0 2px 6px rgba(20,30,60,0.06); }
 #screen-clientes .search-box:focus-within{ border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-light); }
@@ -12130,6 +12151,12 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       card.appendChild(btnRecordatorioClienteCard);
     }
 
+    // NUEVO: cinta de alerta cuando el cliente tiene cuotas vencidas
+    if(prestamosActivosCliente.length > 0){
+      const diasMoraCliente = diasMoraPrestamos(prestamosActivosCliente);
+      if(diasMoraCliente > 0) card.appendChild(crearCintaAlertaMora(diasMoraCliente));
+    }
+
     // Al tocar la tarjeta se abre el detalle completo del cliente
     card.addEventListener('click', ()=> abrirDetalleCliente(cliente));
 
@@ -15775,6 +15802,27 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     vence.setHours(0,0,0,0);
     return Math.round((hoy - vence) / (1000 * 60 * 60 * 24));
   }
+  // NUEVO (pedido del usuario, con imagen de referencia): cinta amarilla de
+  // alerta para tarjetas con cuotas vencidas — "ATENCIÓN Presenta N días
+  // acumulados de mora". N = días de atraso de la cuota vencida más antigua.
+  function diasMoraPrestamos(prestamos){
+    let maximo = 0;
+    prestamos.forEach(p=>{
+      (p.plan || []).forEach(c=>{
+        if(cuotaVencida(p, c)) maximo = Math.max(maximo, diasDeAtraso(c));
+      });
+    });
+    return maximo;
+  }
+  function crearCintaAlertaMora(dias){
+    const cinta = document.createElement('div');
+    cinta.className = 'cinta-alerta-mora';
+    cinta.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" fill="#D63A3A"></path><rect x="11" y="9" width="2" height="6" rx="1" fill="#fff"></rect><circle cx="12" cy="17.6" r="1.2" fill="#fff"></circle></svg>'
+      + '<span class="cinta-alerta-titulo">ATENCIÓN</span>'
+      + '<span class="cinta-alerta-texto">Presenta <b>' + dias + (dias === 1 ? ' día' : ' días') + '</b> acumulados de mora</span>';
+    return cinta;
+  }
+
   function cuotaVencida(prestamo, cuota){
     if(estaCuotaPagada(prestamo, cuota.numero)) return false;
     return diasDeAtraso(cuota) > 0;
@@ -15923,6 +15971,18 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     `;
     if(prestamo.nota){
       card.querySelector('.loan-note span').textContent = prestamo.nota;
+    }
+
+    // NUEVO: cinta de alerta cuando el crédito tiene cuotas vencidas
+    if(estadoVisual === 'vencido'){
+      const diasMoraCredito = diasMoraPrestamos([prestamo]);
+      // CAMBIO (pedido del usuario): la cinta va justo debajo del monto otorgado
+      if(diasMoraCredito > 0){
+        const montoEl = card.querySelector('.loan-amount');
+        const cinta = crearCintaAlertaMora(diasMoraCredito);
+        if(montoEl) montoEl.insertAdjacentElement('afterend', cinta);
+        else card.appendChild(cinta);
+      }
     }
 
     // NUEVO (pedido del usuario): al tocar una barrita de la barra de

@@ -54,7 +54,11 @@
 // congelado mientras hay un modal abierto).
 // CAMBIO: v24 -> v25 — index.html cambió (menús centrados con el estilo de
 // la imagen de referencia, encabezado en el menú de la cuota, "Cerrar").
-const CACHE_NAME = 'crediya-v25';
+// CAMBIO: v25 -> v26 — index.html cambió (cinta de alerta de mora en las
+// tarjetas del cliente y del crédito).
+// CAMBIO: v26 -> v27 — index.html cambió (en la tarjeta del crédito la
+// cinta de alerta va justo debajo del monto otorgado).
+const CACHE_NAME = 'crediya-v27';
 
 const ARCHIVOS_APP_SHELL = [
   './',
