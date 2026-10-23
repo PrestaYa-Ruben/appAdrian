@@ -839,6 +839,75 @@ body.tinte-dashboard-activo .stat-card.tinte-morado{ background:#F6F1FA; border-
 .dia-card.active .dia-numero,
 .dia-card.active .dia-semana{ color:#fff; }
 .dia-card:active{ transform:scale(0.95); }
+/* ==========================================================
+   REDISEÑO "Pagan Hoy" (pedido del usuario, con imagen de referencia):
+   chips de ruta, tira de días con cantidad de cuotas (globo rojo) y
+   monto a cobrar de ese día (datos reales), lista y botón flotante.
+   Todo acotado a #screen-pagan-hoy.
+   ========================================================== */
+#screen-pagan-hoy .ph-chips{
+  display:flex; gap:12px; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+  padding:10px 14px 4px; margin:0;
+}
+#screen-pagan-hoy .ph-chips::-webkit-scrollbar{ display:none; }
+#screen-pagan-hoy .ph-chips .tab-button{
+  flex:0 0 auto; padding:5px 15px; font-size:14.5px; font-weight:600;
+  border-radius:var(--radius-full); border:1.5px solid var(--border);
+  background:var(--surface); color:#7B8794;
+}
+#screen-pagan-hoy .ph-chips .tab-button.active{ background:#1E2A5C; border-color:#1E2A5C; color:#fff; }
+#screen-pagan-hoy .cobros-fecha-fila{ margin:26px 14px 8px; }
+#screen-pagan-hoy .cobros-fecha-header-btn{ font-size:24px; font-weight:500; gap:10px; }
+#screen-pagan-hoy .cobros-fecha-header-btn svg{ width:20px; height:20px; }
+
+#screen-pagan-hoy .ph-dias-strip{ gap:10px; padding:16px 14px 22px; }
+#screen-pagan-hoy .ph-dias-strip .dia-card{
+  position:relative; width:86px; min-width:86px; padding:10px 4px 9px; gap:1px;
+  border-radius:14px; border:1.5px solid #DDE2E8; background:var(--surface);
+}
+#screen-pagan-hoy .ph-dias-strip .dia-card .dia-mes{ font-size:15px; font-weight:400; color:#7B8794; }
+#screen-pagan-hoy .ph-dias-strip .dia-card .dia-numero{ font-size:27px; font-weight:700; color:var(--text); line-height:1.15; }
+#screen-pagan-hoy .ph-dias-strip .dia-card .dia-semana{ font-size:15px; font-weight:400; color:#7B8794; margin-bottom:5px; }
+#screen-pagan-hoy .ph-dias-strip .dia-card.active{ background:#5DC46F; border-color:#5DC46F; }
+#screen-pagan-hoy .ph-dias-strip .dia-card.active .dia-mes,
+#screen-pagan-hoy .ph-dias-strip .dia-card.active .dia-numero,
+#screen-pagan-hoy .ph-dias-strip .dia-card.active .dia-semana{ color:#fff; }
+.ph-dia-monto{
+  font-size:13.5px; font-weight:800; color:#1F6B35; background:#E3F4E7;
+  padding:3px 9px; border-radius:var(--radius-full); white-space:nowrap; letter-spacing:-0.2px;
+}
+.ph-dia-monto.vacio{ visibility:hidden; }
+.dia-card.active .ph-dia-monto{ background:rgba(255,255,255,0.28); color:#fff; }
+.ph-dia-badge{
+  position:absolute; top:-11px; right:-7px;
+  min-width:27px; height:27px; padding:0 6px; box-sizing:border-box;
+  border-radius:var(--radius-full); background:#E04848; color:#fff;
+  border:2.5px solid var(--surface);
+  font-size:13.5px; font-weight:700; display:flex; align-items:center; justify-content:center;
+}
+
+#screen-pagan-hoy .ph-lista-wrap{ padding-bottom:120px; }
+#screen-pagan-hoy #lista-pagan-hoy{ display:flex; flex-direction:column; gap:4px; }
+#screen-pagan-hoy #lista-pagan-hoy .client-card{
+  margin:0 16px; padding:20px 22px 18px 26px; gap:26px;
+  border:1.5px solid #D9DEE5; border-radius:14px;
+}
+#screen-pagan-hoy #lista-pagan-hoy .icon-container{ background:none; width:auto; height:auto; min-width:0; color:#1E2A5C; }
+#screen-pagan-hoy #lista-pagan-hoy .icon-container svg{ width:20px; height:20px; stroke:#1E2A5C; }
+#screen-pagan-hoy #lista-pagan-hoy .info .name{ font-size:17px; font-weight:600; }
+#screen-pagan-hoy #lista-pagan-hoy .info .quota{ font-size:15px; color:#7B8794; margin-top:4px; }
+#screen-pagan-hoy #lista-pagan-hoy .info .due{ font-size:15px; font-weight:600; color:#1E2A5C; margin-top:4px; }
+
+.ph-fab{
+  position:fixed; right:20px; bottom:88px; z-index:45;
+  width:52px; height:52px; border-radius:16px; border:none;
+  background:linear-gradient(135deg, #8C9BEA, #6676D9); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 20px rgba(84,100,210,0.35);
+}
+.ph-fab svg{ width:23px; height:23px; stroke:currentColor; }
+.ph-fab:active{ transform:scale(0.93); }
+
 
 .client-card{
   margin:0 14px;
@@ -1694,6 +1763,63 @@ body.modo-oscuro .np-card-mora .mora-toggle-subtitle{ color:var(--text-secondary
 .loan-card-full{ padding:16px; margin-bottom:7px; }
 .loan-card-clickable{ cursor:pointer; transition:transform .12s ease; }
 .loan-card-clickable:active{ transform:scale(0.98); }
+/* CAMBIO (pedido del usuario): la nota se ve "incrustada" en la tarjeta del
+   crédito — hundida con sombra interior y borde — y con el texto más oscuro. */
+.loan-card-full .loan-note{
+  margin-top:12px;
+  background:rgba(20,30,60,0.05);
+  border:1px solid rgba(20,30,60,0.12);
+  border-left:3px solid var(--primary);
+  box-shadow:inset 0 2px 5px rgba(20,30,60,0.12), inset 0 -1px 0 rgba(255,255,255,0.6);
+  color:var(--text);
+  font-size:13.5px;
+  font-weight:500;
+}
+body.modo-oscuro .loan-card-full .loan-note{ background:rgba(0,0,0,0.25); border-color:rgba(255,255,255,0.10); border-left-color:var(--primary); box-shadow:inset 0 2px 5px rgba(0,0,0,0.45); }
+/* CAMBIO: "2 / 4 cuotas" con color más intenso */
+.loan-card-full .loan-progress-header > span:last-child{ color:var(--text); font-weight:600; }
+/* NUEVO: barra de progreso por partes (una parte por cuota) */
+.loan-progress-segmentos{ display:flex; width:100%; height:18px; margin-top:2px; }
+/* CAMBIO (pedido del usuario): las barritas sin pagar se ven más grises y
+   "incrustadas" (sombra interior); cada una lleva su número de cuota y se
+   puede tocar para ver el globito con valor y fecha. */
+.loan-progress-segmento{
+  position:relative; flex:1; min-width:0; height:100%;
+  background:#D3D9E1; border-radius:5px; overflow:hidden; cursor:pointer;
+  box-shadow:inset 0 1.5px 3px rgba(20,30,60,0.28), inset 0 -1px 0 rgba(255,255,255,0.55);
+}
+.loan-progress-segmento.pagada{ box-shadow:none; }
+.loan-progress-segmento:active{ transform:scale(0.92); }
+.loan-progress-segmento-fill{ height:100%; background:var(--success); border-radius:5px; transition:width .3s ease; }
+.loan-progress-segmento-num{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:10.5px; font-weight:700; color:#4B5563; line-height:1; pointer-events:none;
+}
+.loan-progress-segmento.pagada .loan-progress-segmento-num{ color:#fff; }
+.numeros-chicos .loan-progress-segmento-num{ font-size:8px; }
+.sin-numeros .loan-progress-segmento-num{ display:none; }
+body.modo-oscuro .loan-progress-segmento{ background:rgba(255,255,255,0.10); box-shadow:inset 0 1.5px 3px rgba(0,0,0,0.5); }
+body.modo-oscuro .loan-progress-segmento-num{ color:var(--text-secondary); }
+
+/* Globito de la barrita */
+.globo-cuota{
+  position:fixed; z-index:400; display:none; min-width:120px;
+  background:#1E2A5C; color:#fff; border-radius:10px; padding:8px 12px 9px;
+  box-shadow:0 8px 22px rgba(15,23,42,0.30);
+  opacity:0; transform:translateY(4px); transition:opacity .15s ease, transform .15s ease;
+  pointer-events:auto; text-align:left;
+}
+.globo-cuota.visible{ opacity:1; transform:translateY(0); }
+.globo-cuota::after{
+  content:''; position:absolute; left:var(--flecha-x, 50%); bottom:-6px; margin-left:-6px;
+  border-left:6px solid transparent; border-right:6px solid transparent; border-top:6px solid #1E2A5C;
+}
+.globo-cuota.abajo::after{ bottom:auto; top:-6px; border-top:none; border-bottom:6px solid #1E2A5C; }
+.globo-cuota-titulo{ font-size:11px; font-weight:600; opacity:0.75; margin-bottom:1px; }
+.globo-cuota-valor{ font-size:16px; font-weight:800; letter-spacing:-0.2px; }
+.globo-cuota-detalle{ font-size:12.5px; font-weight:500; color:#FFD08A; margin-top:1px; }
+.globo-cuota-detalle.pagada{ color:#8FE3A7; }
+.loan-card-finalizado .loan-progress-segmento-fill{ background:var(--text-secondary); }
 
 /* NUEVO: atenúa visualmente los créditos finalizados, para que no
    compitan con los activos (que son los que requieren atención/cobro) */
@@ -2336,6 +2462,9 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
 .cuota-monto{ font-size:16px; font-weight:600; color:var(--text); margin-bottom:3px; letter-spacing:-0.2px; }
 .cuota-fecha{ font-size:13px; color:var(--text-secondary); font-weight:400; }
 .cuota-fecha.cuota-fecha-pago{ color:var(--success); font-weight:500; margin-top:1px; }
+.cuota-fecha.cuota-fecha-pago.pago-antes{ color:var(--success); font-weight:600; }
+.cuota-fecha.cuota-fecha-pago.pago-a-tiempo{ color:var(--success); font-weight:600; }
+.cuota-fecha.cuota-fecha-pago.pago-tarde{ color:var(--danger); font-weight:600; }
 
 .cuota-badge{
   font-size:12px;
@@ -2973,6 +3102,75 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
   justify-content:center;
   z-index:210;
 }
+/* NUEVO (pedido del usuario): todos los modales (confirmaciones, menús
+   inferiores, selectores, calendario, imagen de comprobante, etc.)
+   difuminan y ponen borroso todo lo que queda detrás al abrirse. */
+.confirm-modal-overlay,
+.action-sheet-overlay{
+  -webkit-backdrop-filter:blur(7px) saturate(115%);
+  backdrop-filter:blur(7px) saturate(115%);
+}
+.confirm-modal-overlay{ background:rgba(20,30,60,0.28); }
+.action-sheet-overlay{ background:rgba(20,30,60,0.38); }
+
+/* REDISEÑO (pedido del usuario, con imagen de referencia): todos los
+   menús se abren CENTRADOS a mitad de pantalla, en una tarjeta blanca
+   redondeada (~350px), con ícono sin fondo + texto grande, y debajo una
+   tarjeta aparte con "Cerrar". El fondo queda borroso y oscurecido. */
+.confirm-modal-overlay, .action-sheet-overlay{
+  background:rgba(38,48,70,0.42) !important;
+  -webkit-backdrop-filter:blur(8px) saturate(90%);
+  backdrop-filter:blur(8px) saturate(90%);
+}
+.action-sheet-overlay{ align-items:center !important; }
+.action-sheet-overlay .action-sheet-wrap{
+  width:calc(100% - 64px) !important; max-width:350px !important;
+  margin:0 !important; gap:10px;
+}
+.action-sheet-overlay .action-sheet-card{
+  border-radius:14px; box-shadow:0 12px 34px rgba(15,23,42,0.22);
+}
+.action-sheet-overlay .action-sheet-item{
+  min-height:57px; padding:0 22px; gap:22px; border-bottom:1px solid #E6E9EE;
+}
+.action-sheet-overlay .action-sheet-card > .action-sheet-item:last-child{ border-bottom:none; }
+.action-sheet-overlay .action-sheet-item .icon-container{ width:24px; height:24px; min-width:24px; background:none !important; }
+.action-sheet-overlay .action-sheet-item .icon-container svg{ width:20px; height:20px; }
+.action-sheet-overlay .action-sheet-item span{ font-size:16.5px; font-weight:500; color:var(--text); }
+.action-sheet-overlay .action-sheet-item.danger span{ color:var(--danger); }
+.action-sheet-overlay .action-sheet-cancelar .action-sheet-item{ min-height:50px; justify-content:center; padding:0; }
+.action-sheet-overlay .action-sheet-cancelar span{ font-size:16.5px; font-weight:600; color:#1E2A5C; }
+body.modo-oscuro .action-sheet-overlay .action-sheet-cancelar span{ color:var(--text); }
+body.modo-oscuro .action-sheet-overlay .action-sheet-item{ border-bottom-color:var(--border); }
+
+/* Encabezado del menú (check + título + monto · cliente) */
+.action-sheet-header{
+  display:flex; align-items:center; gap:13px;
+  padding:16px 18px 15px; border-bottom:1px solid #E6E9EE;
+}
+.action-sheet-header-icono{
+  width:38px; height:38px; min-width:38px; border-radius:50%;
+  background:#2E8B47; color:#fff; display:flex; align-items:center; justify-content:center;
+}
+.action-sheet-header-icono svg{ width:18px; height:18px; stroke:currentColor; }
+.action-sheet-header.recargo .action-sheet-header-icono{ background:#D63A3A; }
+.action-sheet-header-icono.pendiente{ background:#E08A3C; }
+.action-sheet-header-textos{ min-width:0; }
+.action-sheet-header-titulo{ font-size:17px; font-weight:700; color:var(--text); line-height:1.25; }
+.action-sheet-header-sub{ font-size:14.5px; color:#7B8794; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+body.modo-oscuro .action-sheet-header{ border-bottom-color:var(--border); }
+
+/* Ventanas centradas con el mismo ancho y redondeo */
+.confirm-modal-overlay .confirm-modal-card{ max-width:350px; border-radius:14px; padding:24px 20px 20px; }
+.confirm-modal-overlay .mora-hoy-card{ max-width:350px; border-radius:14px; max-height:76vh; }
+.confirm-modal-overlay .imagen-comprobante-card{ max-width:300px; }
+.confirm-modal-overlay .imagen-comprobante-card img{ width:auto; max-width:100%; max-height:64vh; object-fit:contain; }
+
+/* NUEVO: mientras haya un modal abierto, todo lo de atrás queda
+   congelado — no se puede desplazar la pantalla y las animaciones de
+   fondo se pausan (la clase la pone el JS de "congelar fondo"). */
+html.modal-abierto, html.modal-abierto body{ overflow:hidden !important; overscroll-behavior:none; }
+html.modal-abierto .app *, html.modal-abierto .bottom-nav *{ animation-play-state:paused !important; }
 .action-sheet-wrap{
   width:100%;
   max-width:340px;
@@ -3480,7 +3678,7 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
 }
 .client-row .info{ flex:1; min-width:0; }
 .client-row .info .name{
-  font-size:16px;
+  font-size:18px; /* CAMBIO: antes 16px — fuente un poco más grande, a pedido */
   font-weight:600;
   color:var(--text);
   margin-bottom:4px;
@@ -3493,13 +3691,13 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
   display:flex;
   align-items:center;
   gap:6px;
-  font-size:14px;
+  font-size:15.5px; /* CAMBIO: antes 14px */
   color:var(--text-secondary);
   font-weight:400;
 }
-.client-row .info .phone svg{ width:14px; height:14px; stroke:currentColor; flex-shrink:0; }
+.client-row .info .phone svg{ width:15px; height:15px; stroke:currentColor; flex-shrink:0; }
 .client-row .info .saldo-cliente{
-  font-size:13px;
+  font-size:14.5px; /* CAMBIO: antes 13px */
   color:var(--primary);
   font-weight:600;
   margin-top:4px;
@@ -3512,18 +3710,40 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
 /* CAMBIO: tinte más intenso y más rojo (menos rosado) que el resto de
    tintes "vencido" de la app — SOLO en este módulo de Clientes, a
    pedido — para que un cliente en mora resalte con más fuerza. */
+/* CAMBIO (pedido del usuario, con imagen de referencia): el tinte rojo
+   ahora es MUCHO más claro, y el estado se marca con una pestaña de color
+   en el lado izquierdo de la tarjeta (rojo = en mora, verde = al día). */
 .client-row.client-row-mora{
-  background:#F7C4C4;
-  border-color:#D96565;
+  background:#FEF5F5;
+  border-color:#F1D3D3;
+  border-left:7px solid #D63A3A;
 }
 /* NUEVO: tinte verde para un cliente con préstamo activo y AL DÍA (sin
    ninguna cuota vencida) — mismo verde pastel que ya usan las tarjetas
    del dashboard (.tinte-verde), para distinguir a simple vista quién
    está en mora (rojo) de quién no (verde). */
 .client-row.client-row-al-dia{
-  background:#F1FAF4;
-  border-color:#BFE8CE;
+  background:#F5FBF7;
+  border-color:#CFEBD8;
+  border-left:7px solid #5DAE6A;
 }
+
+/* NUEVO: fila con la frecuencia de pago y la fecha del próximo pago
+   (o de la cuota vencida) — mismo estilo de "pastillas" de la imagen. */
+.client-row-chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; padding-right:24px; }
+.client-row-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 10px; border-radius:8px;
+  font-size:13.5px; font-weight:600; line-height:1.2; white-space:nowrap;
+}
+.client-row-chip svg{ width:15px; height:15px; stroke:currentColor; flex-shrink:0; }
+.client-row-chip.frecuencia{ background:var(--surface); border:1.5px solid #D5DBE3; color:#1E2A5C; }
+.client-row-chip.proxima{ background:#ECEFF3; color:#1E2A5C; font-weight:500; }
+.client-row-chip.proxima b, .client-row-chip.vencida b{ font-weight:700; }
+.client-row-chip.vencida{ background:#FBE3E3; color:#B42828; font-weight:500; }
+body.modo-oscuro .client-row.client-row-mora{ background:rgba(214,58,58,0.10); border-color:rgba(214,58,58,0.30); border-left-color:#D63A3A; }
+body.modo-oscuro .client-row.client-row-al-dia{ background:rgba(93,174,106,0.10); border-color:rgba(93,174,106,0.30); border-left-color:#5DAE6A; }
+body.modo-oscuro .client-row-chip.frecuencia, body.modo-oscuro .client-row-chip.proxima{ background:var(--background); color:var(--text); border-color:var(--border); }
 
 /* Insignia de préstamos activos, esquina superior derecha de la tarjeta */
 .client-row-badge{
@@ -3559,6 +3779,43 @@ body.ocultar-codigo-credito .mora-hoy-codigo{
   z-index:2;
 }
 .client-row-recordatorio-btn svg{ width:16px; height:16px; stroke:currentColor; }
+
+/* ==========================================================
+   AJUSTES (pedido del usuario) — Clientes y Detalle del Préstamo
+   ========================================================== */
+/* Borde de la tarjeta del cliente más remarcado */
+.client-row{ border-width:2px; }
+.client-row.client-row-mora{ border-color:#E3AAAA; border-left-color:#D63A3A; }
+.client-row.client-row-al-dia{ border-color:#A5D8B5; border-left-color:#5DAE6A; }
+/* Anillo de color en el círculo del avatar: rojo = en mora, verde = al día */
+.client-row.client-row-mora .avatar-circle{ box-shadow:0 0 0 1.5px #D63A3A; } /* CAMBIO: anillo más fino (antes 3px) */
+.client-row.client-row-al-dia .avatar-circle{ box-shadow:0 0 0 1.5px #5DAE6A; }
+/* CAMBIO: inicial del avatar más grande en la tarjeta del cliente (antes 16px) */
+.client-row .avatar-circle{ font-size:20px; font-weight:700; }
+/* CAMBIO: "Cuota" con su ícono y valor en negro más intenso y un poco más grande */
+.client-row .info .phone{ color:var(--text); font-size:16.5px; font-weight:500; }
+.client-row .info .phone svg{ width:17px; height:17px; stroke:var(--text); }
+/* Se retira el ícono del reloj (recordatorio) de la esquina inferior
+   derecha — se oculta, sin borrar su lógica. Programar un recordatorio
+   sigue disponible desde la ficha del cliente y desde cada cuota. */
+.client-row-recordatorio-btn{ display:none !important; }
+.client-row .client-row-chips{ padding-right:0; }
+
+/* Buscador de Clientes más remarcado y botón "+" redondo */
+#screen-clientes .search-box{ border:2px solid #AEB8C5; box-shadow:0 2px 6px rgba(20,30,60,0.06); }
+#screen-clientes .search-box:focus-within{ border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-light); }
+#screen-clientes .search-box svg{ stroke:#5B6676; }
+#btn-nuevo-cliente{ border-radius:50%; box-shadow:0 6px 14px rgba(47,107,255,0.30); }
+body.modo-oscuro #screen-clientes .search-box{ border-color:var(--text-secondary); }
+
+/* Detalle del Préstamo → Pagadas: círculo y botón de 3 puntos más marcados */
+.pago-item .cuota-numero{ border-width:3px; font-weight:800; font-size:16px; background:var(--surface); }
+.pago-item .cuota-accion.mas{
+  background:var(--surface); color:#1F2933;
+  border:2px solid #AEB8C5; box-shadow:0 2px 6px rgba(20,30,60,0.10);
+}
+.pago-item .cuota-accion.mas svg{ width:19px; height:19px; }
+body.modo-oscuro .pago-item .cuota-accion.mas{ color:var(--text); border-color:var(--text-secondary); }
 
 /* ==========================================================
    DETALLE DE CLIENTE — perfil, filas de info, estadísticas
@@ -6963,7 +7220,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     </div>
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="accion-cancelar-tipo-documento">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7000,7 +7257,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     </div>
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="accion-cancelar-menu-documento">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7238,6 +7495,10 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     <span class="header-spacer"></span>
   </header>
 
+  <!-- NUEVO: chips de ruta (mismo filtro global de rutas que Inicio,
+       Clientes, Préstamos, etc.) -->
+  <div class="tabs ph-chips" id="chips-rutas-pagan-hoy"></div>
+
   <!-- NUEVO: selector de días (tira deslizable) — mismo componente visual
        ya usado en Cobros (clases .cobros-fecha-fila / .dias-strip /
        .dia-card, ver CSS y JS ya existentes). Por defecto muestra hoy;
@@ -7249,11 +7510,17 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     </button>
     <button type="button" class="cobros-btn-hoy" id="btn-pagan-hoy-ir-hoy" style="display:none;">Hoy</button>
   </div>
-  <div class="dias-strip" id="pagan-hoy-dias-strip"></div>
+  <div class="dias-strip ph-dias-strip" id="pagan-hoy-dias-strip"></div>
 
-  <section class="detail-body" style="padding-top:6px;">
+  <section class="detail-body ph-lista-wrap" style="padding-top:6px;">
     <div id="lista-pagan-hoy"></div>
   </section>
+
+  <!-- NUEVO: botón flotante — abre "Modo de Cobro" (lista para cobrar:
+       cuotas vencidas + las que vencen el día seleccionado). -->
+  <button type="button" class="ph-fab" id="btn-pagan-hoy-modo-cobro" aria-label="Abrir lista de cobro">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="18" rx="2"></rect><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path><rect x="9" y="2.5" width="6" height="3" rx="1"></rect><polyline points="9 13.5 11.2 15.7 15.5 11.4"></polyline></svg>
+  </button>
 
 </div>
 
@@ -7308,9 +7575,13 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M12 18v-6"></path><path d="M9.5 14.5 12 12l2.5 2.5"></path></svg>
     <span>Préstamos</span>
   </a>
-  <a class="nav-item" data-nav="pagos">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"></path><path d="M17 14h.01"></path><path d="M3 8h18v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path></svg>
-    <span>Pagos</span>
+  <!-- CAMBIO (pedido del usuario): "Pagos" se retiró de la barra
+       inferior y en su lugar va "Pagan Hoy". La pantalla screen-pagos y
+       su lógica se dejan intactas en el archivo (solo ya no tienen
+       acceso desde aquí). -->
+  <a class="nav-item" data-nav="pagan-hoy">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><polyline points="8.5 15.5 11 18 15.5 13.5"></polyline></svg>
+    <span>Pagan Hoy</span>
   </a>
   <a class="nav-item" data-nav="reportes">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
@@ -7366,18 +7637,27 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 <div id="menu-cuota-overlay" class="action-sheet-overlay" style="display:none;">
   <div class="action-sheet-wrap">
     <div class="action-sheet-card">
+      <!-- NUEVO (pedido del usuario, con imagen de referencia): encabezado
+           con check, "Comprobante · Cuota N" y "$monto · Cliente". -->
+      <div class="action-sheet-header" id="menu-cuota-header">
+        <div class="action-sheet-header-icono"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+        <div class="action-sheet-header-textos">
+          <div class="action-sheet-header-titulo" id="menu-cuota-titulo">Comprobante</div>
+          <div class="action-sheet-header-sub" id="menu-cuota-sub"></div>
+        </div>
+      </div>
       <div class="action-sheet-item" id="accion-ver-imagen">
         <div class="icon-container green">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>
         </div>
-        <span>Ver Imagen</span>
+        <span>Ver imagen</span>
       </div>
 
       <div class="action-sheet-item" id="accion-compartir-imagen">
         <div class="icon-container green">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
         </div>
-        <span>Compartir Imagen</span>
+        <span>Compartir imagen</span>
       </div>
 
       <!-- NUEVO: editar un pago ya registrado (monto, fecha, método, nota) -->
@@ -7398,7 +7678,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="accion-cancelar-menu-cuota">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7410,6 +7690,13 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 <div id="menu-cuota-pendiente-overlay" class="action-sheet-overlay" style="display:none;">
   <div class="action-sheet-wrap">
     <div class="action-sheet-card">
+      <div class="action-sheet-header">
+        <div class="action-sheet-header-icono pendiente"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><polyline points="12 8 12 12 14.5 13.5"></polyline></svg></div>
+        <div class="action-sheet-header-textos">
+          <div class="action-sheet-header-titulo" id="menu-cuota-pendiente-titulo">Cuota</div>
+          <div class="action-sheet-header-sub" id="menu-cuota-pendiente-sub"></div>
+        </div>
+      </div>
       <!-- NUEVO: antes esta acción vivía en un icono suelto dentro de la
            fila de la cuota — ahora toda la fila abre este mismo menú, así
            que "Pagar" pasa a ser la primera opción de aquí. -->
@@ -7437,7 +7724,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="accion-cancelar-menu-cuota-pendiente">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7493,7 +7780,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="accion-cancelar-menu-mas-opciones-prestamo">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7516,7 +7803,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="btn-cerrar-selector-personalizado">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7554,7 +7841,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="btn-cerrar-calendario-personalizado">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7715,7 +8002,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="accion-cancelar-respaldo-local-restaurar">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -7954,7 +8241,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     <div class="action-sheet-card" id="menu-tarjeta-cliente-opciones"></div>
     <div class="action-sheet-card action-sheet-cancelar">
       <div class="action-sheet-item centrado" id="btn-cerrar-menu-tarjeta-cliente">
-        <span>Cancelar</span>
+        <span>Cerrar</span>
       </div>
     </div>
   </div>
@@ -8526,7 +8813,8 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     clientes: document.getElementById('screen-clientes'),
     reportes: document.getElementById('screen-reportes'),
     prestamos: document.getElementById('screen-prestamos'),
-    pagos: document.getElementById('screen-pagos')
+    pagos: document.getElementById('screen-pagos'),
+    'pagan-hoy': document.getElementById('screen-pagan-hoy') // NUEVO: ahora es pestaña de la barra inferior
   };
 
   document.querySelectorAll('.nav-item').forEach(item=>{
@@ -8546,6 +8834,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         if(destino === 'reportes') actualizarReportes(); // datos frescos cada vez que se visita
         if(destino === 'prestamos') renderizarListaPrestamos(); // datos frescos cada vez que se visita
         if(destino === 'pagos') renderizarListaPagosGlobal(); // datos frescos cada vez que se visita
+        if(destino === 'pagan-hoy' && typeof prepararPaganHoy === 'function') prepararPaganHoy(); // NUEVO: siempre abre en el día de hoy
         if(destino === 'clientes'){
           // NUEVO: al entrar a Clientes desde la barra inferior, los
           // filtros siempre vuelven a su estado por defecto ("Todas" las
@@ -11779,6 +12068,43 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         saldoLinea.textContent = 'Saldo p.: ' + formatearPesos(saldoTotal) + ' · ' + cuotasPagadasTotal + ' de ' + cuotasTotalSum;
         info.appendChild(saldoLinea);
       }
+
+      // NUEVO (pedido del usuario): frecuencia de pago + fecha del próximo
+      // pago. Se toma la primera cuota sin pagar (la más antigua) entre
+      // todos los préstamos activos del cliente; si esa cuota ya venció se
+      // muestra en rojo como "Cuota vencida".
+      let proxima = null;
+      prestamosActivosCliente.forEach(p=>{
+        const c = proximaCuotaPendiente(p);
+        if(c && c.fechaISO && (!proxima || new Date(c.fechaISO) < new Date(proxima.cuota.fechaISO))){
+          proxima = { prestamo: p, cuota: c };
+        }
+      });
+      const prestamoRef = proxima ? proxima.prestamo : prestamosActivosCliente[0];
+      const NOMBRES_FREC_CLIENTE = { diario:'Diario', semanal:'Semanal', quincenal:'Quincenal', mensual:'Mensual' };
+      const DIAS_CORTOS_CLIENTE = ['dom','lun','mar','mié','jue','vie','sáb'];
+      const MESES_CORTOS_CLIENTE = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+      const chips = document.createElement('div');
+      chips.className = 'client-row-chips';
+
+      const chipFrecuencia = document.createElement('span');
+      chipFrecuencia.className = 'client-row-chip frecuencia';
+      chipFrecuencia.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span></span>';
+      chipFrecuencia.querySelector('span').textContent = NOMBRES_FREC_CLIENTE[prestamoRef.frecuencia] || prestamoRef.frecuencia || '';
+      chips.appendChild(chipFrecuencia);
+
+      if(proxima){
+        const f = new Date(proxima.cuota.fechaISO);
+        const textoFecha = DIAS_CORTOS_CLIENTE[f.getDay()] + ' ' + f.getDate() + ' ' + MESES_CORTOS_CLIENTE[f.getMonth()];
+        const vencida = cuotaVencida(proxima.prestamo, proxima.cuota);
+        const chipFecha = document.createElement('span');
+        chipFecha.className = 'client-row-chip ' + (vencida ? 'vencida' : 'proxima');
+        chipFecha.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15.5 14"></polyline></svg><span>' + (vencida ? 'Cuota vencida: ' : 'Próxima cuota: ') + '<b></b></span>';
+        chipFecha.querySelector('b').textContent = textoFecha;
+        chips.appendChild(chipFecha);
+      }
+      info.appendChild(chips);
     }
 
     card.appendChild(avatar);
@@ -14106,6 +14432,17 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     return pagos.reduce((masReciente, p) => new Date(p.fecha) > new Date(masReciente.fecha) ? p : masReciente, pagos[0]).fecha;
   }
 
+  // NUEVO (pedido del usuario): compara el día en que se completó el pago de
+  // una cuota con su fecha de vencimiento, por día calendario local.
+  // Devuelve "Pagó 3 días antes" / "Pagó a tiempo" / "Pagó 10 días tarde".
+  function textoPuntualidadPago(fechaPagoISO, fechaVenceISO){
+    const aDia = (iso)=>{ const d = new Date(iso); return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()); };
+    const dif = Math.round((aDia(fechaPagoISO) - aDia(fechaVenceISO)) / 86400000);
+    if(dif > 0) return { texto: 'Pagó ' + dif + (dif === 1 ? ' día' : ' días') + ' tarde', clase: 'pago-tarde' };
+    if(dif < 0) return { texto: 'Pagó ' + (-dif) + (dif === -1 ? ' día' : ' días') + ' antes', clase: 'pago-antes' };
+    return { texto: 'Pagó a tiempo', clase: 'pago-a-tiempo' };
+  }
+
   function pendienteDeCuota(prestamo, cuotaPlan){
     return Math.max(cuotaPlan.total - sumaAbonadaCuota(prestamo, cuotaPlan.numero), 0);
   }
@@ -15466,6 +15803,56 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
   // disponible desde otras pantallas). El parámetro mostrarCliente ya
   // no cambia el contenido (se deja en la firma para no romper los
   // llamados existentes).
+  // NUEVO: globito flotante para las barritas de la barra de progreso.
+  // Un solo elemento reutilizado; se cierra al tocar fuera, al hacer
+  // scroll o a los 4 segundos.
+  let globoCuotaEl = null;
+  let globoCuotaTimer = null;
+  let globoCuotaAncla = null; // NUEVO: barrita a la que pertenece el globito abierto
+  function cerrarGloboCuota(){
+    globoCuotaAncla = null;
+    if(globoCuotaEl) globoCuotaEl.classList.remove('visible');
+    if(globoCuotaTimer){ clearTimeout(globoCuotaTimer); globoCuotaTimer = null; }
+  }
+  function mostrarGloboCuota(anclaEl, titulo, valor, detalle, pagada){
+    // NUEVO (pedido del usuario): tocar de nuevo la misma barrita esconde el globito
+    if(globoCuotaAncla === anclaEl && globoCuotaEl && globoCuotaEl.classList.contains('visible')){
+      cerrarGloboCuota();
+      return;
+    }
+    if(!globoCuotaEl){
+      globoCuotaEl = document.createElement('div');
+      globoCuotaEl.className = 'globo-cuota';
+      document.body.appendChild(globoCuotaEl);
+      document.addEventListener('click', (e)=>{ if(globoCuotaEl && !globoCuotaEl.contains(e.target)) cerrarGloboCuota(); });
+      window.addEventListener('scroll', cerrarGloboCuota, { passive:true });
+    }
+    globoCuotaEl.innerHTML = '<div class="globo-cuota-titulo"></div><div class="globo-cuota-valor"></div><div class="globo-cuota-detalle"></div>';
+    globoCuotaEl.querySelector('.globo-cuota-titulo').textContent = titulo;
+    globoCuotaEl.querySelector('.globo-cuota-valor').textContent = valor;
+    const det = globoCuotaEl.querySelector('.globo-cuota-detalle');
+    det.textContent = detalle;
+    det.classList.toggle('pagada', !!pagada);
+    globoCuotaEl.classList.remove('visible', 'abajo');
+    globoCuotaEl.style.left = '0px';
+    globoCuotaEl.style.top = '0px';
+    globoCuotaEl.style.display = 'block';
+
+    const r = anclaEl.getBoundingClientRect();
+    const g = globoCuotaEl.getBoundingClientRect();
+    const centro = r.left + r.width / 2;
+    let left = Math.max(8, Math.min(window.innerWidth - g.width - 8, centro - g.width / 2));
+    let top = r.top - g.height - 10;
+    if(top < 8){ top = r.bottom + 10; globoCuotaEl.classList.add('abajo'); }
+    globoCuotaEl.style.left = left + 'px';
+    globoCuotaEl.style.top = top + 'px';
+    globoCuotaEl.style.setProperty('--flecha-x', Math.max(14, Math.min(g.width - 14, centro - left)) + 'px');
+    globoCuotaAncla = anclaEl;
+    requestAnimationFrame(()=> globoCuotaEl.classList.add('visible'));
+    if(globoCuotaTimer) clearTimeout(globoCuotaTimer);
+    globoCuotaTimer = setTimeout(cerrarGloboCuota, 4000);
+  }
+
   function crearTarjetaPrestamo(prestamo, mostrarCliente){
     // Cuotas realmente completas (no cuenta registros de pago sueltos: un
     // recargo por mora o un abono parcial no deben inflar el progreso)
@@ -15518,8 +15905,15 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         <span>Progreso</span>
         <span>${cuotasPagadas} / ${prestamo.cuotas} cuotas <span class="loan-progress-pct">· ${Math.round(porcentajeProgreso)}%</span></span>
       </div>
-      <div class="loan-progress-track">
-        <div class="loan-progress-fill" style="width:${porcentajeProgreso}%"></div>
+      <!-- CAMBIO (pedido del usuario): barra dividida en partes, una por
+           cuota. Cuota pagada = parte llena; cuota con abono parcial = parte
+           llena en la proporción abonada (datos reales). -->
+      <div class="loan-progress-segmentos${(prestamo.plan || []).length > 40 ? ' sin-numeros' : ((prestamo.plan || []).length > 20 ? ' numeros-chicos' : '')}" style="gap:${(prestamo.plan || []).length > 30 ? 1 : ((prestamo.plan || []).length > 12 ? 2 : 4)}px">
+        ${(prestamo.plan || []).map(c => {
+          const pagada = estaCuotaPagada(prestamo, c.numero);
+          const fraccion = pagada ? 100 : Math.min(100, Math.round((sumaAbonadaCuota(prestamo, c.numero) / (c.total || 1)) * 100));
+          return `<div class="loan-progress-segmento${pagada ? ' pagada' : ''}" data-numero="${c.numero}" role="button" aria-label="Cuota ${c.numero}"><div class="loan-progress-segmento-fill" style="width:${fraccion}%"></div><span class="loan-progress-segmento-num">${c.numero}</span></div>`;
+        }).join('')}
       </div>
       ${prestamo.nota ? `
       <div class="loan-note">
@@ -15530,6 +15924,26 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     if(prestamo.nota){
       card.querySelector('.loan-note span').textContent = prestamo.nota;
     }
+
+    // NUEVO (pedido del usuario): al tocar una barrita de la barra de
+    // progreso se abre un globito con el valor de esa cuota y, si ya se
+    // pagó, la fecha del pago ("Pagó: 22-oct"); si no, la fecha en que
+    // debe pagarse ("Pagar el 22-oct"). stopPropagation() para que no se
+    // abra también el detalle del crédito.
+    card.querySelectorAll('.loan-progress-segmento').forEach(seg=>{
+      seg.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const numero = Number(seg.dataset.numero);
+        const cuotaSeg = (prestamo.plan || []).find(c => c.numero === numero);
+        if(!cuotaSeg) return;
+        const MESES_GLOBO = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+        const fechaCorta = (iso)=>{ const d = new Date(iso); return d.getDate() + '-' + MESES_GLOBO[d.getMonth()]; };
+        const pagada = estaCuotaPagada(prestamo, numero);
+        const fechaPago = pagada ? fechaPagoCuota(prestamo, numero) : null;
+        const linea2 = pagada && fechaPago ? 'Pagó: ' + fechaCorta(fechaPago) : 'Pagar el ' + fechaCorta(cuotaSeg.fechaISO);
+        mostrarGloboCuota(seg, 'Cuota ' + numero, formatearPesos(cuotaSeg.total), linea2, pagada);
+      });
+    });
 
     // NUEVO: ícono de recordatorio en la tarjeta — abre directo "Programar
     // Recordatorio" para el cliente de este préstamo, sin abrir el
@@ -15904,7 +16318,8 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
         <div class="cuota-info">
           <div class="cuota-monto">${formatearPesos(cuota.total)}</div>
           <div class="cuota-fecha">Vence: ${formatearFechaCorta(new Date(cuota.fechaISO))}</div>
-          ${fechaDePago ? `<div class="cuota-fecha cuota-fecha-pago">Pago: ${formatearFechaCorta(new Date(fechaDePago))}</div>` : ''}
+          ${fechaDePago ? `<div class="cuota-fecha">Pagó: ${formatearFechaCorta(new Date(fechaDePago))}</div>
+          <div class="cuota-fecha cuota-fecha-pago ${textoPuntualidadPago(fechaDePago, cuota.fechaISO).clase}">${textoPuntualidadPago(fechaDePago, cuota.fechaISO).texto}</div>` : ''}
           ${esAbonada ? `<div class="cuota-dias-atraso abonada">Abonado ${formatearPesos(abonadoParcial)} de ${formatearPesos(cuota.total)}</div>` : ''}
         </div>
         <div class="cuota-estado-col">
@@ -16081,8 +16496,8 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       const navPrestamos = document.querySelector('.nav-item[data-nav="prestamos"]');
       if(navPrestamos) navPrestamos.classList.add('active');
     }else if(origenDetallePrestamo === 'pagan-hoy'){
-      screenPaganHoy.style.display = 'block';
-      bottomNav.style.display = 'none';
+      mostrarPaganHoyComoPestana(); // CAMBIO: ahora es pestaña de la barra inferior
+      refrescarPaganHoySiVisible(); // refleja un abono recién registrado
     }else if(origenDetallePrestamo === 'cuotas-vencidas'){
       screenCuotasVencidas.style.display = 'block';
       bottomNav.style.display = 'none';
@@ -16917,6 +17332,12 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
   function abrirMenuCuota(prestamo, cuota, pago){
     cuotaMenuActiva = { prestamo, cuota, pago: pago || null };
+    // NUEVO: encabezado del menú — "Comprobante · Cuota N" / "$monto · Cliente"
+    const clienteMenu = clientesGuardados.find(c => c.id === prestamo.clienteId);
+    const esRecargoMenu = pago && pago.aplicarA === 'mora';
+    document.getElementById('menu-cuota-titulo').textContent = (esRecargoMenu ? 'Recargo · Cuota ' : 'Comprobante · Cuota ') + cuota.numero;
+    document.getElementById('menu-cuota-sub').textContent = formatearPesos(pago ? pago.monto : (cuota.total || 0)) + (clienteMenu ? ' · ' + clienteMenu.nombre : '');
+    document.getElementById('menu-cuota-header').classList.toggle('recargo', !!esRecargoMenu);
     menuCuotaOverlay.style.display = 'flex';
     // NUEVO: "Editar cuota" solo tiene sentido si ya existe un pago
     // registrado sobre el que corregir algo — una cuota todavía pendiente
@@ -16937,6 +17358,9 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
   function abrirMenuCuotaPendiente(prestamo, cuota){
     cuotaPendienteMenuActiva = { prestamo, cuota };
+    const clienteMenuP = clientesGuardados.find(c => c.id === prestamo.clienteId);
+    document.getElementById('menu-cuota-pendiente-titulo').textContent = 'Cuota ' + cuota.numero + ' · Pendiente';
+    document.getElementById('menu-cuota-pendiente-sub').textContent = formatearPesos(pendienteDeCuota(prestamo, cuota)) + (clienteMenuP ? ' · ' + clienteMenuP.nombre : '');
     menuCuotaPendienteOverlay.style.display = 'flex';
   }
   function cerrarMenuCuotaPendiente(){
@@ -19014,9 +19438,44 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
   // Genera la tira de tarjetas de día alrededor de fechaBase — mismo
   // patrón exacto que generarDiasStripCobros, aplicado a esta pantalla.
+  // NUEVO: resumen REAL por día para la tira de "Pagan Hoy" — cuántas
+  // cuotas vencen ese día y cuánto falta por cobrar de ellas (lo pendiente
+  // de cada cuota, descontando abonos parciales). Usa exactamente el mismo
+  // criterio que clientesPaganHoy(): préstamos activos, clientes activos,
+  // cuotas no pagadas y el filtro de ruta global.
+  function resumenPaganHoyPorDia(){
+    const mapa = new Map();
+    prestamosGuardados.filter(p => p.estado === 'activo' && clienteEstaActivo(p.clienteId)).forEach(prestamo=>{
+      const cliente = clientesGuardados.find(c => c.id === prestamo.clienteId);
+      if(!cliente) return;
+      if(rutasFiltroActivas && !rutasFiltroActivas.has(cliente.ruta || '')) return;
+      (prestamo.plan || []).forEach(cuota=>{
+        if(!cuota.fechaISO || estaCuotaPagada(prestamo, cuota.numero)) return;
+        const clave = claveFechaLocal(new Date(cuota.fechaISO));
+        const actual = mapa.get(clave) || { cantidad:0, monto:0 };
+        actual.cantidad += 1;
+        actual.monto += pendienteDeCuota(prestamo, cuota);
+        mapa.set(clave, actual);
+      });
+    });
+    return mapa;
+  }
+
+  // "$470K", "$1,6M" — formato corto para que quepa en la tarjeta del día
+  function formatearMontoCortoPaganHoy(valor){
+    const v = Math.round(valor || 0);
+    if(v >= 1000000){
+      const m = Math.round(v / 100000) / 10;
+      return '$' + String(m).replace('.', ',') + 'M';
+    }
+    if(v >= 1000) return '$' + Math.round(v / 1000) + 'K';
+    return '$' + v;
+  }
+
   function generarDiasStripPaganHoy(fechaBase){
     if(!paganHoyDiasStrip) return;
     const base = new Date(fechaBase + 'T00:00:00');
+    const resumenDias = resumenPaganHoyPorDia(); // NUEVO
     paganHoyDiasStrip.innerHTML = '';
     for(let i = -COBROS_DIAS_ANTES; i <= COBROS_DIAS_DESPUES; i++){
       const d = new Date(base);
@@ -19030,10 +19489,13 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       btn.type = 'button';
       btn.className = 'dia-card' + (clave === paganHoyFechaSeleccionada ? ' active' : '');
       btn.dataset.fecha = clave;
+      const resumenDia = resumenDias.get(clave) || { cantidad:0, monto:0 };
       btn.innerHTML = `
+        ${resumenDia.cantidad > 0 ? `<span class="ph-dia-badge">${resumenDia.cantidad > 99 ? '99+' : resumenDia.cantidad}</span>` : ''}
         <span class="dia-mes">${MESES_ABREV_MIN[d.getMonth()]}</span>
         <span class="dia-numero">${d.getDate()}</span>
         <span class="dia-semana">${DIAS_ABREV_COBROS[d.getDay()]}</span>
+        <span class="ph-dia-monto${resumenDia.cantidad > 0 ? '' : ' vacio'}">${formatearMontoCortoPaganHoy(resumenDia.monto)}</span>
       `;
       btn.addEventListener('click', ()=>{
         if(clave === paganHoyFechaSeleccionada) return;
@@ -19079,16 +19541,56 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
     });
   }
 
-  document.getElementById('btn-pagan-hoy').addEventListener('click', ()=>{
-    paganHoyFechaSeleccionada = claveFechaConOffset(0); // NUEVO: siempre abre mostrando el día de hoy por defecto
+  // NUEVO: prepara la pantalla (siempre en el día de hoy, datos frescos).
+  // La usan tanto la pestaña "Pagan Hoy" de la barra inferior como el
+  // botón de calendario del encabezado de Inicio.
+  function prepararPaganHoy(){
+    paganHoyFechaSeleccionada = claveFechaConOffset(0);
+    renderizarChipsRutas();
     generarDiasStripPaganHoy(paganHoyFechaSeleccionada);
     actualizarTituloFechaPaganHoy();
     renderizarPaganHoy();
-    screenInicio.style.display = 'none';
-    screenPaganHoy.style.display = 'block';
-    bottomNav.style.display = 'none';
-    window.scrollTo(0, 0);
     requestAnimationFrame(centrarDiaSeleccionadoPaganHoy);
+  }
+
+  // Muestra la pantalla como pestaña principal (con la barra inferior
+  // visible y "Pagan Hoy" marcado).
+  function mostrarPaganHoyComoPestana(){
+    Object.values(mainScreens).forEach(s=> s.style.display = 'none');
+    screenPaganHoy.style.display = 'block';
+    bottomNav.style.display = 'flex';
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const navPaganHoy = document.querySelector('.nav-item[data-nav="pagan-hoy"]');
+    if(navPaganHoy) navPaganHoy.classList.add('active');
+  }
+
+  document.getElementById('btn-pagan-hoy').addEventListener('click', ()=>{
+    prepararPaganHoy();
+    mostrarPaganHoyComoPestana();
+    window.scrollTo(0, 0);
+  });
+
+  // Refresca tira + lista si la pantalla está a la vista (tras un abono,
+  // un cambio de ruta, etc.), conservando el día que se estaba viendo.
+  function refrescarPaganHoySiVisible(){
+    if(!screenPaganHoy || screenPaganHoy.style.display === 'none') return;
+    generarDiasStripPaganHoy(paganHoyFechaSeleccionada);
+    renderizarPaganHoy();
+    requestAnimationFrame(centrarDiaSeleccionadoPaganHoy);
+  }
+
+  // Botón flotante: abre "Modo de Cobro" en el mismo día seleccionado,
+  // y al volver regresa a Pagan Hoy.
+  let origenModoCobro = 'inicio';
+  document.getElementById('btn-pagan-hoy-modo-cobro').addEventListener('click', ()=>{
+    origenModoCobro = 'pagan-hoy';
+    fechaModoCobro = paganHoyFechaSeleccionada;
+    actualizarTextoBotonFechaModoCobro();
+    renderizarModoCobro();
+    screenPaganHoy.style.display = 'none';
+    bottomNav.style.display = 'none';
+    screenModoCobro.style.display = 'block';
+    window.scrollTo(0, 0);
   });
 
   document.getElementById('btn-cerrar-pagan-hoy').addEventListener('click', ()=>{
@@ -19219,6 +19721,13 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
 
   document.getElementById('btn-cerrar-modo-cobro').addEventListener('click', ()=>{
     screenModoCobro.style.display = 'none';
+    if(origenModoCobro === 'pagan-hoy'){
+      origenModoCobro = 'inicio';
+      mostrarPaganHoyComoPestana();
+      refrescarPaganHoySiVisible();
+      window.scrollTo(0, 0);
+      return;
+    }
     screenInicio.style.display = 'block';
     bottomNav.style.display = 'flex';
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -20340,7 +20849,7 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
   const CONTENEDORES_CHIPS_RUTAS = [
     'chips-rutas-inicio', 'chips-rutas-clientes', 'chips-rutas-reportes',
     'chips-rutas-prestamos', 'chips-rutas-pagos', 'chips-rutas-cuotas-vencidas',
-    'chips-rutas-modo-cobro'
+    'chips-rutas-modo-cobro', 'chips-rutas-pagan-hoy'
   ];
 
   // ==========================================================
@@ -20412,7 +20921,8 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       ['Préstamos', renderizarListaPrestamos],
       ['Pagos', renderizarListaPagosGlobal],
       ['Cuotas Vencidas', renderizarCuotasVencidas],
-      ['Modo de Cobro', () => { if(typeof renderizarModoCobro === 'function') renderizarModoCobro(); }]
+      ['Modo de Cobro', () => { if(typeof renderizarModoCobro === 'function') renderizarModoCobro(); }],
+      ['Pagan Hoy', () => { if(typeof refrescarPaganHoySiVisible === 'function') refrescarPaganHoySiVisible(); }]
     ];
     pasos.forEach(([nombre, fn])=>{
       try{
@@ -21801,6 +22311,22 @@ button:focus-visible, .nav-item:focus-visible, .tab-button:focus-visible{
       bottomNav.style.display = 'flex';
       window.scrollTo(0, 0);
     });
+  })();
+
+  // NUEVO (pedido del usuario): "congelar" el fondo mientras haya un modal
+  // abierto. Observa todos los overlays (.confirm-modal-overlay y
+  // .action-sheet-overlay); si alguno está visible, agrega la clase
+  // "modal-abierto" a <html>, que bloquea el desplazamiento y pausa las
+  // animaciones de atrás. No cambia la posición del scroll.
+  (function congelarFondoConModales(){
+    const overlays = Array.from(document.querySelectorAll('.confirm-modal-overlay, .action-sheet-overlay'));
+    function revisar(){
+      const algunoAbierto = overlays.some(o => o.style.display !== 'none' && getComputedStyle(o).display !== 'none');
+      document.documentElement.classList.toggle('modal-abierto', algunoAbierto);
+    }
+    const observador = new MutationObserver(revisar);
+    overlays.forEach(o => observador.observe(o, { attributes:true, attributeFilter:['style', 'class'] }));
+    revisar();
   })();
 
   // NUEVO: registra el service worker de la PWA (ver service-worker.js).

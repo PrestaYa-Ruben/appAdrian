@@ -30,7 +30,31 @@
 // tarjeta del crédito).
 // CAMBIO: v12 -> v13 — index.html cambió (rediseño completo de la
 // pantalla "Nuevo Préstamo").
-const CACHE_NAME = 'crediya-v13';
+// CAMBIO: v13 -> v14 — index.html cambió ("Pagos" se cambió por "Pagan Hoy"
+// en la barra inferior, y la pantalla Pagan Hoy se rediseñó).
+// CAMBIO: v14 -> v15 — index.html cambió (tarjeta de cliente con frecuencia,
+// próxima cuota y pestaña lateral de color; cuotas pagadas con "Pagó X días antes/tarde").
+// CAMBIO: v15 -> v16 — index.html cambió (fecha de pago de la cuota en
+// su propia línea, debajo de "Vence").
+// CAMBIO: v16 -> v17 — index.html cambió (bordes y anillo del avatar en
+// Clientes, buscador y botón + redondo, círculos de Pagadas más marcados).
+// CAMBIO: v17 -> v18 — index.html cambió (anillo del avatar más fino,
+// inicial más grande y línea "Cuota" más oscura y grande en Clientes).
+// CAMBIO: v18 -> v19 — index.html cambió (nota incrustada y conteo de
+// cuotas más oscuro en la tarjeta del crédito).
+// CAMBIO: v19 -> v20 — index.html cambió (barra de progreso de la tarjeta
+// del crédito dividida en una parte por cuota).
+// CAMBIO: v20 -> v21 — index.html cambió (barritas de la barra de progreso
+// con número, gris incrustado y globito con valor y fecha al tocarlas).
+// CAMBIO: v21 -> v22 — index.html cambió (tocar de nuevo la misma barrita
+// esconde el globito).
+// CAMBIO: v22 -> v23 — index.html cambió (los modales desenfocan el
+// fondo al abrirse).
+// CAMBIO: v23 -> v24 — index.html cambió (modales más pequeños y fondo
+// congelado mientras hay un modal abierto).
+// CAMBIO: v24 -> v25 — index.html cambió (menús centrados con el estilo de
+// la imagen de referencia, encabezado en el menú de la cuota, "Cerrar").
+const CACHE_NAME = 'crediya-v25';
 
 const ARCHIVOS_APP_SHELL = [
   './',
